@@ -1,0 +1,177 @@
+/*
+ * Copyright The OpenTelemetry Authors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+package io.opentelemetry.sdk.metrics
+
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
+import io.opentelemetry.api.common.AttributeKey.Companion.stringKey
+import io.opentelemetry.api.common.Attributes
+import io.opentelemetry.sdk.common.InstrumentationLibraryInfo
+import io.opentelemetry.sdk.metrics.common.InstrumentType
+import io.opentelemetry.sdk.metrics.data.AggregationTemporality
+import io.opentelemetry.sdk.metrics.data.MetricDataType
+import io.opentelemetry.sdk.metrics.testing.InMemoryMetricReader
+import io.opentelemetry.sdk.metrics.view.Aggregation
+import io.opentelemetry.sdk.metrics.view.InstrumentSelector
+import io.opentelemetry.sdk.metrics.view.View
+import io.opentelemetry.sdk.resources.Resource
+import io.opentelemetry.sdk.trace.TestClock
+import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
+
+/** Unit tests for [DoubleSumObserverSdk]. */
+internal class SdkDoubleSumObserverTest {
+    private val testClock: TestClock = TestClock.create()
+    private val sdkMeterProviderBuilder =
+        SdkMeterProvider.builder().setClock(testClock).setResource(RESOURCE)
+    @Test
+    fun collectMetrics_NoRecords() {
+        val sdkMeterReader = InMemoryMetricReader.create()
+        val sdkMeterProvider = sdkMeterProviderBuilder.registerMetricReader(sdkMeterReader).build()
+        sdkMeterProvider[SdkDoubleSumObserverTest::class.simpleName!!]
+            .counterBuilder("testObserver")
+            .ofDoubles()
+            .setDescription("My own DoubleSumObserver")
+            .setUnit("ms")
+            .buildWithCallback {}
+        sdkMeterReader.collectAllMetrics().shouldBeEmpty()
+    }
+
+    @Test
+    fun collectMetrics_WithOneRecord() {
+        val sdkMeterReader = InMemoryMetricReader.create()
+        val sdkMeterProvider = sdkMeterProviderBuilder.registerMetricReader(sdkMeterReader).build()
+        sdkMeterProvider[SdkDoubleSumObserverTest::class.simpleName!!]
+            .counterBuilder("testObserver")
+            .ofDoubles()
+            .setDescription("My own DoubleSumObserver")
+            .setUnit("ms")
+            .buildWithCallback { result ->
+                result.observe(12.1, Attributes.builder().put("k", "v").build())
+            }
+        testClock.advance(1.seconds)
+        assertSoftly(sdkMeterReader.collectAllMetrics()) {
+            assertSoftly(single()) {
+                resource shouldBe RESOURCE
+                instrumentationLibraryInfo shouldBe INSTRUMENTATION_LIBRARY_INFO
+                name shouldBe "testObserver"
+                description shouldBe "My own DoubleSumObserver"
+                unit shouldBe "ms"
+                type shouldBe MetricDataType.DOUBLE_SUM
+                doubleSumData.shouldNotBeNull()
+                assertSoftly(doubleSumData) {
+                    isMonotonic.shouldBeTrue()
+                    aggregationTemporality shouldBe AggregationTemporality.CUMULATIVE
+                    assertSoftly(points.single()) {
+                        startEpochNanos shouldBe testClock.now() - SECOND_NANOS
+                        epochNanos shouldBe testClock.now()
+                        attributes shouldBe Attributes.of(stringKey("k"), "v")
+                        value shouldBe 12.1
+                    }
+                }
+            }
+        }
+        testClock.advance(1.seconds)
+        assertSoftly(sdkMeterReader.collectAllMetrics()) {
+            assertSoftly(single()) {
+                resource shouldBe RESOURCE
+                instrumentationLibraryInfo shouldBe INSTRUMENTATION_LIBRARY_INFO
+                name shouldBe "testObserver"
+                description shouldBe "My own DoubleSumObserver"
+                unit shouldBe "ms"
+                type shouldBe MetricDataType.DOUBLE_SUM
+                doubleSumData.shouldNotBeNull()
+                assertSoftly(doubleSumData) {
+                    isMonotonic.shouldBeTrue()
+                    aggregationTemporality shouldBe AggregationTemporality.CUMULATIVE
+                    assertSoftly(points.single()) {
+                        startEpochNanos shouldBe testClock.now() - 2 * SECOND_NANOS
+                        epochNanos shouldBe testClock.now()
+                        attributes shouldBe Attributes.of(stringKey("k"), "v")
+                        value shouldBe 12.1
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun collectMetrics_DeltaSumAggregator() {
+        val sdkMeterReader = InMemoryMetricReader.createDelta()
+        val sdkMeterProvider =
+            sdkMeterProviderBuilder
+                .registerMetricReader(sdkMeterReader)
+                .registerView(
+                    InstrumentSelector.builder()
+                        .setInstrumentType(InstrumentType.OBSERVABLE_SUM)
+                        .build(),
+                    View.builder().setAggregation(Aggregation.sum()).build()
+                )
+                .build()
+        sdkMeterProvider[SdkDoubleSumObserverTest::class.simpleName!!]
+            .counterBuilder("testObserver")
+            .ofDoubles()
+            .setDescription("My own DoubleSumObserver")
+            .setUnit("ms")
+            .buildWithCallback { result ->
+                result.observe(12.1, Attributes.builder().put("k", "v").build())
+            }
+        testClock.advance(1.seconds)
+        assertSoftly(sdkMeterReader.collectAllMetrics()) {
+            assertSoftly(single()) {
+                resource shouldBe RESOURCE
+                instrumentationLibraryInfo shouldBe INSTRUMENTATION_LIBRARY_INFO
+                name shouldBe "testObserver"
+                description shouldBe "My own DoubleSumObserver"
+                unit shouldBe "ms"
+                type shouldBe MetricDataType.DOUBLE_SUM
+                doubleSumData.shouldNotBeNull()
+                assertSoftly(doubleSumData) {
+                    isMonotonic.shouldBeTrue()
+                    aggregationTemporality shouldBe AggregationTemporality.DELTA
+                    assertSoftly(points.single()) {
+                        startEpochNanos shouldBe testClock.now() - SECOND_NANOS
+                        epochNanos shouldBe testClock.now()
+                        attributes shouldBe Attributes.of(stringKey("k"), "v")
+                        value shouldBe 12.1
+                    }
+                }
+            }
+        }
+        testClock.advance(1.seconds)
+        assertSoftly(sdkMeterReader.collectAllMetrics()) {
+            assertSoftly(single()) {
+                resource shouldBe RESOURCE
+                instrumentationLibraryInfo shouldBe INSTRUMENTATION_LIBRARY_INFO
+                name shouldBe "testObserver"
+                description shouldBe "My own DoubleSumObserver"
+                unit shouldBe "ms"
+                type shouldBe MetricDataType.DOUBLE_SUM
+                doubleSumData.shouldNotBeNull()
+                assertSoftly(doubleSumData) {
+                    isMonotonic.shouldBeTrue()
+                    aggregationTemporality shouldBe AggregationTemporality.DELTA
+                    assertSoftly(points.single()) {
+                        startEpochNanos shouldBe testClock.now() - SECOND_NANOS
+                        epochNanos shouldBe testClock.now()
+                        attributes shouldBe Attributes.of(stringKey("k"), "v")
+                        value shouldBe 0
+                    }
+                }
+            }
+        }
+    }
+
+    companion object {
+        private const val SECOND_NANOS: Long = 1000000000
+        private val RESOURCE =
+            Resource.create(Attributes.of(stringKey("resource_key"), "resource_value"))
+        private val INSTRUMENTATION_LIBRARY_INFO =
+            InstrumentationLibraryInfo.create(SdkDoubleSumObserverTest::class.simpleName!!, null)
+    }
+}
