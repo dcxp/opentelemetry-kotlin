@@ -151,7 +151,6 @@ constructor(private val reservoirSupplier: Supplier<ExemplarReservoir>) :
             negativeBuckets = DoubleExponentialHistogramBuckets()
         }
 
-        @Synchronized
         override fun doAccumulateThenReset(
             exemplars: List<ExemplarData>
         ): ExponentialHistogramAccumulation {
@@ -171,7 +170,6 @@ constructor(private val reservoirSupplier: Supplier<ExemplarReservoir>) :
             return acc
         }
 
-        @Synchronized
         override fun doRecordDouble(value: Double) {
 
             // ignore NaN and infinity

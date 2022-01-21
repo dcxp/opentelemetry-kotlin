@@ -17,7 +17,7 @@ val ideaActive = System.getProperty("idea.active") == "true"
 kotlin {
     jvm { withJava() }
     // TODO fix for js build
-    /*
+
         js(IR) {
             nodejs{
                 testTask {
@@ -34,7 +34,7 @@ kotlin {
                 }
             }
         }
-    */
+
     // TODO fix code for native build
     /*
         if (ideaActive) {
