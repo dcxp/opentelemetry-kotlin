@@ -8,8 +8,6 @@ buildscript { dependencies { classpath("org.jetbrains.kotlinx:atomicfu-gradle-pl
 
 apply(plugin = "kotlinx-atomicfu")
 
-group = "de.snk.dcxp.api.core"
-
 val ideaActive = System.getProperty("idea.active") == "true"
 
 kotlin {
