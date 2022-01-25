@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlinx.kover") apply false
 }
 
-version = "0.1.0"
+version = "1.0.0"
 
 allprojects {
     repositories {
@@ -15,7 +15,7 @@ allprojects {
 
 subprojects {
     group = "io.opentelemetry"
-
+    version = rootProject.version
     tasks {
         withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
             kotlinOptions { jvmTarget = "1.8" }
