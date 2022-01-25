@@ -16,10 +16,6 @@ allprojects {
 subprojects {
     group = "io.opentelemetry"
 
-    if (System.getenv("PACKAGE_VERSION") != null) {
-        project.version = System.getenv("PACKAGE_VERSION")
-    }
-
     tasks {
         withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
             kotlinOptions { jvmTarget = "1.8" }
@@ -30,6 +26,20 @@ subprojects {
         withType<org.gradle.api.tasks.bundling.AbstractArchiveTask> {
             isPreserveFileTimestamps = false
             isReproducibleFileOrder = true
+        }
+    }
+
+    apply(plugin = "maven-publish")
+    configure<PublishingExtension> {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/dcxp/opentelemetry-kotlin")
+                credentials {
+                    username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                    password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+                }
+            }
         }
     }
 }
