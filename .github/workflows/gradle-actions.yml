@@ -44,11 +44,11 @@ jobs:
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1.0.4
       - name: Bump version
-          uses: chkfung/android-version-actions@v1.1
-          with:
-            gradlePath: app/build.gradle # or app/build.gradle.kts
-            versionCode: ${{github.run_number}}
-            versionName: 1.0.0
+        uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: app/build.gradle # or app/build.gradle.kts
+          versionCode: ${{github.run_number}}
+          versionName: 1.0.0
       - name: Setup Gradle
         uses: burrunan/gradle-cache-action@v1
         with:
