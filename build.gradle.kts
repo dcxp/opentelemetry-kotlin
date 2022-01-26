@@ -4,7 +4,13 @@ plugins {
     id("org.jetbrains.kotlinx.kover") apply false
 }
 
-version = "1.0.0"
+
+if (System.getenv("GITHUB_RUN_NUMBER") != null) {
+    version = "1.0.${System.getenv("GITHUB_RUN_NUMBER")}"
+}else{
+    version = "1.0.0"
+}
+
 
 allprojects {
     repositories {
