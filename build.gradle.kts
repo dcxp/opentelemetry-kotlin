@@ -28,6 +28,15 @@ subprojects {
 
     apply(plugin = "maven-publish")
     configure<PublishingExtension> {
+        val publicationsFromMainHost = listOf("jvm", "js", "kotlinMultiplatform")
+        publications{
+            matching { it.name in publicationsFromMainHost }.all {
+                val targetPublication = this@all
+                tasks.withType<AbstractPublishToMaven>()
+                    .matching { it.publication == targetPublication }
+                    .configureEach { onlyIf { findProperty("isMainHost") == "true" } }
+            }
+        }
         repositories {
             maven {
                 name = "GitHubPackages"
