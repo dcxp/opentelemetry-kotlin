@@ -28,7 +28,7 @@ subprojects {
 
     apply(plugin = "maven-publish")
     configure<PublishingExtension> {
-        val publicationsFromMainHost = listOf("jvm", "js", "kotlinMultiplatform")
+        /*val publicationsFromMainHost = listOf("jvm", "js", "kotlinMultiplatform")
         publications{
             matching { it.name in publicationsFromMainHost }.all {
                 val targetPublication = this@all
@@ -36,7 +36,7 @@ subprojects {
                     .matching { it.publication == targetPublication }
                     .configureEach { onlyIf { findProperty("isMainHost") == "true" } }
             }
-        }
+        }*/
         repositories {
             maven {
                 name = "GitHubPackages"
