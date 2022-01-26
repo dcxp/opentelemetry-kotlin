@@ -42,18 +42,7 @@ kotlin {
         mingwX64()
         linuxX64()
     }
-    val publicationsFromMainHost =
-        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
-    publishing {
-        publications {
-            matching { it.name in publicationsFromMainHost }.all {
-                val targetPublication = this@all
-                tasks.withType<AbstractPublishToMaven>()
-                    .matching { it.publication == targetPublication }
-                    .configureEach { onlyIf { findProperty("isMainHost") == "true" } }
-            }
-        }
-    }
+    
     sourceSets {
         all { languageSettings.optIn("kotlin.RequiresOptIn") }
 
