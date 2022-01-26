@@ -27,7 +27,7 @@ jobs:
       - name: Gradle check
         uses: burrunan/gradle-cache-action@v1
         with:
-          arguments: assemble --scan
+          arguments: check --scan
           gradle-build-scan-report: true
   publish-to-maven:
     name: Push maven packages
