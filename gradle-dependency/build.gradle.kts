@@ -43,7 +43,7 @@ kotlin {
         val atomicFu="0.17.0"
         val kotlinxDatetime="0.3.2"
         val kotlinxCollectionsImmutable="0.3.5"
-        val uuid="0.3.1"
+        val uuid="0.4.0"
         val koTestVersion="5.1.0"
         val coroutineVersion="1.6.0"
 
