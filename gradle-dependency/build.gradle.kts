@@ -71,3 +71,8 @@ kotlin {
         }
     }
 }
+tasks {
+    withType<PublishToMavenRepository>().configureEach {
+        this.enabled = false
+    }
+}
