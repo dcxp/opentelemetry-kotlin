@@ -1,4 +1,4 @@
-val kotlinVersion = "1.6.0"
+val kotlinVersion = "1.6.10"
 
 plugins {
     kotlin("multiplatform")
@@ -44,7 +44,7 @@ kotlin {
         val kotlinxDatetime="0.3.2"
         val kotlinxCollectionsImmutable="0.3.5"
         val uuid="0.3.1"
-        val koTestVersion="5.0.3"
+        val koTestVersion="5.1.0"
         val coroutineVersion="1.6.0"
 
         val commonMain by getting {

@@ -69,7 +69,7 @@ kotlin {
                 implementation(
                     "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" + "-native-mt"
                 )
-                implementation("io.kotest:kotest-assertions-core:5.0.3")
+                implementation("io.kotest:kotest-assertions-core:5.1.0")
             }
         }
     }
