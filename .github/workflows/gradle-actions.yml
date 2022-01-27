@@ -47,6 +47,18 @@ jobs:
         uses: burrunan/gradle-cache-action@v1
         with:
           gradle-version: wrapper
+      - name: Gradle clean
+          uses: burrunan/gradle-cache-action@v1
+          with:
+            arguments: clean
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Gradle assemble
+          uses: burrunan/gradle-cache-action@v1
+          with:
+            arguments: assemble
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Gradle publish
         uses: burrunan/gradle-cache-action@v1
         with:
