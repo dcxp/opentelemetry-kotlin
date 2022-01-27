@@ -52,11 +52,11 @@ kotlin {
         val commonMain by getting { dependencies { api(project(":api:all")) } }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
-                implementation("org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.6.10")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.10")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.10")
                 implementation(
-                    "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion" + "-native-mt"
+                    "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" + "-native-mt"
                 )
             }
         }

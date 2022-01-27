@@ -6,7 +6,7 @@ package io.opentelemetry.sdk.common
 
 /** Interface for getting the current time. */
 interface Clock {
-    
+
     /**
      * Returns the current epoch timestamp in nanos from this clock. This timestamp should only be
      * used to compute a current time. To compute a duration, timestamps should always be obtained

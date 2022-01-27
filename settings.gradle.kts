@@ -1,7 +1,7 @@
 rootProject.name = "opentelemetry-kotlin"
 
 pluginManagement {
-    val kotlinVersion: String by settings
+    val kotlinVersion = "1.6.10"
     plugins {
         id("org.jetbrains.kotlin.multiplatform") version "$kotlinVersion"
         id("org.jetbrains.kotlin.plugin.serialization") version "$kotlinVersion"
@@ -12,6 +12,8 @@ pluginManagement {
         mavenCentral()
     }
 }
+
+include(":gradle-dependency")
 
 include(":context")
 
