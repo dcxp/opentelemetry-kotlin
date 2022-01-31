@@ -40,7 +40,7 @@ import kotlinx.collections.immutable.persistentListOf
  */
 class InMemoryMetricExporter private constructor() : MetricExporter {
     private val finishedMetricItems = atomic(persistentListOf<MetricData>())
-    private var isStopped = false
+    private val isStopped = atomic(false)
 
     /**
      * Returns a `List` of the finished `Metric`s, represented by `MetricData`.
@@ -71,7 +71,7 @@ class InMemoryMetricExporter private constructor() : MetricExporter {
      * If this is called after `shutdown`, this will return `ResultCode.FAILURE`.
      */
     override fun export(metrics: Collection<MetricData>): CompletableResultCode {
-        if (isStopped) {
+        if (isStopped.value) {
             return CompletableResultCode.ofFailure()
         }
         finishedMetricItems.update { it.addAll(metrics) }
@@ -95,7 +95,7 @@ class InMemoryMetricExporter private constructor() : MetricExporter {
      * `CompletableResultCode.ofFailure()`
      */
     override fun shutdown(): CompletableResultCode {
-        isStopped = true
+        isStopped.lazySet(true)
         reset()
         return CompletableResultCode.ofSuccess()
     }

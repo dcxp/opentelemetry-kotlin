@@ -4,6 +4,8 @@
  */
 package io.opentelemetry.sdk.metrics.internal.debug
 
+import kotlinx.atomicfu.atomic
+
 /**
  * Determines if the SDK is in debugging mode (captures stack traces) or not.
  *
@@ -12,14 +14,17 @@ package io.opentelemetry.sdk.metrics.internal.debug
  */
 object DebugConfig {
     private const val ENABLE_METRICS_DEBUG_PROPERTY = "otel.experimental.sdk.metrics.debug"
-
+    private val isMetricsDebugEnabled_intern = atomic(false)
     /**
      * Returns true if metrics debugging is enabled.
      *
      * This will grab stack traces on instrument/view registration.
      */
-    var isMetricsDebugEnabled = false
-        private set
+    var isMetricsDebugEnabled
+        get() = isMetricsDebugEnabled_intern.value
+        private set(value){
+            isMetricsDebugEnabled_intern.lazySet(value)
+        }
 
     init {
         // Attempt to mirror the logic in DefaultConfigProperties here...

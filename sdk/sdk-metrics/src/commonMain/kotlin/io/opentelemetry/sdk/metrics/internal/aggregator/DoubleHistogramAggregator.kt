@@ -126,7 +126,8 @@ class DoubleHistogramAggregator(
             val bucketIndex: Int = ExplicitBucketHistogramUtils.findBucketIndex(boundaries, value)
             lock.lock()
             try {
-                sum.update { value + it }
+                val oldValue = sum.value
+                sum.lazySet(oldValue + value)
                 counts.value[bucketIndex]++
             } finally {
                 lock.unlock()
@@ -136,5 +137,9 @@ class DoubleHistogramAggregator(
         override fun doRecordLong(value: Long) {
             doRecordDouble(value.toDouble())
         }
+
+        private data class SumWrapper(
+            val sum: Double = 0.0
+        )
     }
 }
