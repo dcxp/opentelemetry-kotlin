@@ -28,13 +28,11 @@ import kotlinx.atomicfu.update
 class DoubleSumAggregator(
     instrumentDescriptor: InstrumentDescriptor,
     private val reservoirSupplier: Supplier<ExemplarReservoir>
-) :
-    io.opentelemetry.sdk.metrics.internal.aggregator.AbstractSumAggregator<
-        io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation>(instrumentDescriptor) {
+) : AbstractSumAggregator<DoubleAccumulation>(instrumentDescriptor) {
 
     override fun createHandle():
-        io.opentelemetry.sdk.metrics.internal.aggregator.AggregatorHandle<
-            io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation> {
+        AggregatorHandle<
+            DoubleAccumulation> {
         return Handle(reservoirSupplier.get())
     }
 
@@ -42,27 +40,27 @@ class DoubleSumAggregator(
         value: Double,
         attributes: Attributes,
         context: Context
-    ): io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation {
-        return io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation.Companion.create(
+    ): DoubleAccumulation {
+        return DoubleAccumulation.create(
             value
         )
     }
 
     override fun merge(
-        previousAccumulation: io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation,
-        accumulation: io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation
-    ): io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation {
-        return io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation.Companion.create(
+        previousAccumulation: DoubleAccumulation,
+        accumulation: DoubleAccumulation
+    ): DoubleAccumulation {
+        return DoubleAccumulation.create(
             previousAccumulation.value + accumulation.value,
             accumulation.exemplars
         )
     }
 
     override fun diff(
-        previousAccumulation: io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation,
-        accumulation: io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation
-    ): io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation {
-        return io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation.Companion.create(
+        previousAccumulation: DoubleAccumulation,
+        accumulation: DoubleAccumulation
+    ): DoubleAccumulation {
+        return DoubleAccumulation.create(
             accumulation.value - previousAccumulation.value,
             accumulation.exemplars
         )
@@ -73,7 +71,7 @@ class DoubleSumAggregator(
         instrumentationLibraryInfo: InstrumentationLibraryInfo,
         descriptor: MetricDescriptor,
         accumulationByLabels:
-            Map<Attributes, io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation>,
+            Map<Attributes, DoubleAccumulation>,
         temporality: AggregationTemporality,
         startEpochNanos: Long,
         lastCollectionEpoch: Long,
@@ -88,7 +86,7 @@ class DoubleSumAggregator(
             DoubleSumData.create(
                 isMonotonic,
                 temporality,
-                io.opentelemetry.sdk.metrics.internal.aggregator.MetricDataUtils.toDoublePointList(
+                MetricDataUtils.toDoublePointList(
                     accumulationByLabels,
                     if (temporality === AggregationTemporality.CUMULATIVE) startEpochNanos
                     else lastCollectionEpoch,
@@ -98,22 +96,30 @@ class DoubleSumAggregator(
         )
     }
 
-    internal class Handle(exemplarReservoir: ExemplarReservoir) :
-        io.opentelemetry.sdk.metrics.internal.aggregator.AggregatorHandle<
-            io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation>(
+    internal class Handle(exemplarReservoir: ExemplarReservoir)  :
+        AggregatorHandle<
+            DoubleAccumulation>(
             exemplarReservoir
         ) {
-        private val current = atomic(0.0)
+        //Wrapper is needed because of a deadlock in native if a double atomic is directly updated
+        private val current = atomic(SumWrapper())
+
         override fun doAccumulateThenReset(
             exemplars: List<ExemplarData>
-        ): io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation {
-            val currentSum = current.getAndSet(0.0)
-            return io.opentelemetry.sdk.metrics.internal.aggregator.DoubleAccumulation.Companion
-                .create(currentSum, exemplars)
+        ): DoubleAccumulation {
+            val currentSum = current.getAndSet(SumWrapper()).sum
+            return DoubleAccumulation.create(currentSum, exemplars)
         }
 
         override fun doRecordDouble(value: Double) {
-            current.update { it + value }
+            current.update {
+                it.copy(sum = it.sum + value )
+            }
         }
+
+        private data class SumWrapper(
+            val sum: Double = 0.0
+        )
     }
+
 }

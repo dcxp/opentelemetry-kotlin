@@ -10,6 +10,7 @@ import io.opentelemetry.sdk.metrics.data.MetricData
 import io.opentelemetry.sdk.metrics.export.MetricProducer
 import io.opentelemetry.sdk.metrics.export.MetricReader
 import io.opentelemetry.sdk.metrics.export.MetricReaderFactory
+import kotlinx.atomicfu.atomic
 
 /**
  * A [MetricReader] implementation that can be used to test OpenTelemetry integration.
@@ -34,12 +35,12 @@ class InMemoryMetricReader
 private constructor(override val preferredTemporality: AggregationTemporality) :
     MetricReader, MetricReaderFactory {
 
-    private var metricProducer: MetricProducer? = null
+    private val metricProducer = atomic<MetricProducer?>(null)
 
     /** Returns all metrics accumulated since the last call. */
     fun collectAllMetrics(): Collection<MetricData> {
         val metricProducer = metricProducer
-        return metricProducer?.collectAllMetrics() ?: emptyList()
+        return metricProducer.value?.collectAllMetrics() ?: emptyList()
     }
 
     override val supportedTemporality: Set<AggregationTemporality>
@@ -51,7 +52,7 @@ private constructor(override val preferredTemporality: AggregationTemporality) :
 
     override fun flush(): CompletableResultCode {
         val metricProducer = metricProducer
-        metricProducer?.collectAllMetrics()
+        metricProducer.value?.collectAllMetrics()
         return CompletableResultCode.ofSuccess()
     }
 
@@ -60,7 +61,7 @@ private constructor(override val preferredTemporality: AggregationTemporality) :
     }
 
     override fun apply(producer: MetricProducer): MetricReader {
-        metricProducer = producer
+        metricProducer.lazySet(producer)
         return this
     }
 
