@@ -3,31 +3,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 package io.opentelemetry.sdk.metrics.export
-/*
-import java.util.concurrent.ScheduledExecutorService
+
+import kotlin.time.Duration
 
 internal class PeriodicMetricReaderFactory(
-    exporter: io.opentelemetry.sdk.metrics.export.MetricExporter,
-    scheduleDelayNanos: Long,
-    scheduler: ScheduledExecutorService?
-) : io.opentelemetry.sdk.metrics.export.MetricReaderFactory {
-    private val exporter: io.opentelemetry.sdk.metrics.export.MetricExporter
-    private val intervalNanos: Long
-    private val scheduler: ScheduledExecutorService?
-    init {
-        this.exporter = exporter
-        intervalNanos = scheduleDelayNanos
-        this.scheduler = scheduler
-    }
-
+    private val exporter: MetricExporter,
+    private val scheduleDelay: Duration
+) : MetricReaderFactory {
     override fun apply(
-        producer: io.opentelemetry.sdk.metrics.export.MetricProducer
-    ): io.opentelemetry.sdk.metrics.export.MetricReader {
-        val result: io.opentelemetry.sdk.metrics.export.PeriodicMetricReader =
-            io.opentelemetry.sdk.metrics.export.PeriodicMetricReader(producer, exporter, scheduler)
+        producer: MetricProducer
+    ): MetricReader {
+        val result = PeriodicMetricReader(producer, exporter)
         // TODO - allow a different start delay.
-        result.start(intervalNanos)
+        result.start(scheduleDelay)
         return result
     }
 }
-*/

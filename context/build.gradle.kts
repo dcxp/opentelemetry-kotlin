@@ -72,5 +72,30 @@ kotlin {
                 implementation("io.kotest:kotest-assertions-core:5.1.0")
             }
         }
+
+        val jvmMain by getting {
+            dependsOn(commonMain)
+            dependencies {}
+        }
+        val jsMain by getting {
+            dependsOn(commonMain)
+            dependencies {}
+        }
+        val nativeMain by creating { dependsOn(commonMain) }
+
+        targets.forEach {
+            it.compilations.forEach { compilation ->
+                when (compilation.name) {
+                    "main" ->
+                        compilation.apply {
+                            when (this) {
+                                is org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation -> { // Native
+                                    defaultSourceSet { dependsOn(nativeMain) }
+                                }
+                            }
+                        }
+                }
+            }
+        }
     }
 }

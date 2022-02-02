@@ -4,6 +4,7 @@
  */
 package io.opentelemetry.sdk.common
 
+import io.opentelemetry.api.common.normalizeToNanos
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.locks.reentrantLock
@@ -16,6 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.datetime.DateTimeUnit
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.nanoseconds
 
 /**
  * This class models JDK 8's CompletableFuture to afford migration should Open Telemetry's SDK
@@ -135,7 +138,7 @@ class CompletableResultCode private constructor(state: State) {
         }
         return this
     }*/
-    suspend fun join(timeout: Long, unit: DateTimeUnit): CompletableResultCode {
+    suspend fun join(timeout: Duration): CompletableResultCode {
         if (isDone) {
             return this
         }
@@ -153,6 +156,11 @@ class CompletableResultCode private constructor(state: State) {
         semaphore.acquire()
         return this
     }
+
+    suspend fun join(timeout: Long, unit: DateTimeUnit): CompletableResultCode {
+        return join(unit.normalizeToNanos(timeout).nanoseconds)
+    }
+
     companion object {
         /** Returns a [CompletableResultCode] that has been completed successfully. */
         fun ofSuccess(): CompletableResultCode {

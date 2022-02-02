@@ -3,43 +3,35 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 package io.opentelemetry.sdk.metrics.export
-/*
-import io.opentelemetry.api.internal.Utils.checkArgument
+
+import io.opentelemetry.api.common.normalizeToNanos
+import kotlinx.atomicfu.atomic
+import kotlinx.datetime.DateTimeUnit
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.nanoseconds
+
 
 /** A builder for [PeriodicMetricReader]. */
 class PeriodicMetricReaderBuilder
-internal constructor(metricExporter: io.opentelemetry.sdk.metrics.export.MetricExporter) {
-    private val metricExporter: io.opentelemetry.sdk.metrics.export.MetricExporter
-    private var intervalNanos: Long = TimeUnit.MINUTES.toNanos(DEFAULT_SCHEDULE_DELAY_MINUTES)
-
-    @Nullable private var executor: ScheduledExecutorService? = null
-
-    init {
-        this.metricExporter = metricExporter
+constructor(
+    private val metricExporter: MetricExporter
+) {
+    private val interval = atomic(DEFAULT_SCHEDULE_DELAY_MINUTES.minutes)
+    /**
+     * Sets the interval of reads. If unset, defaults to {@value DEFAULT_SCHEDULE_DELAY_MINUTES}min.
+     */
+    fun setInterval(interval: Long, unit: DateTimeUnit): PeriodicMetricReaderBuilder {
+        require(interval > 0){ "interval must be positive" }
+        return setInterval(unit.normalizeToNanos(interval).nanoseconds)
     }
 
     /**
      * Sets the interval of reads. If unset, defaults to {@value DEFAULT_SCHEDULE_DELAY_MINUTES}min.
      */
-    fun setInterval(interval: Long, unit: TimeUnit): PeriodicMetricReaderBuilder {
-        Objects.requireNonNull<TimeUnit>(unit, "unit")
-        checkArgument(interval > 0, "interval must be positive")
-        intervalNanos = unit.toNanos(interval)
-        return this
-    }
-
-    /**
-     * Sets the interval of reads. If unset, defaults to {@value DEFAULT_SCHEDULE_DELAY_MINUTES}min.
-     */
-    fun setInterval(interval: java.time.Duration): PeriodicMetricReaderBuilder {
-        Objects.requireNonNull<java.time.Duration>(interval, "interval")
-        return setInterval(interval.toNanos(), TimeUnit.NANOSECONDS)
-    }
-
-    /** Sets the [ScheduledExecutorService] to schedule reads on. */
-    fun setExecutor(executor: ScheduledExecutorService?): PeriodicMetricReaderBuilder {
-        Objects.requireNonNull<ScheduledExecutorService>(executor, "executor")
-        this.executor = executor
+    fun setInterval(interval: Duration): PeriodicMetricReaderBuilder {
+        require(interval.isPositive()){ "interval must be positive" }
+        this.interval.lazySet(interval)
         return this
     }
 
@@ -47,16 +39,10 @@ internal constructor(metricExporter: io.opentelemetry.sdk.metrics.export.MetricE
      * Returns a new [MetricReaderFactory] with the configuration of this builder which can be
      * registered with a [io.opentelemetry.sdk.metrics.SdkMeterProvider].
      */
-    fun newMetricReaderFactory(): io.opentelemetry.sdk.metrics.export.MetricReaderFactory {
-        var executor: ScheduledExecutorService? = executor
-        if (executor == null) {
-            executor =
-                Executors.newScheduledThreadPool(1, DaemonThreadFactory("PeriodicMetricReader"))
-        }
-        return io.opentelemetry.sdk.metrics.export.PeriodicMetricReaderFactory(
+    fun newMetricReaderFactory(): MetricReaderFactory {
+        return PeriodicMetricReaderFactory(
             metricExporter,
-            intervalNanos,
-            executor
+            interval.value,
         )
     }
 
@@ -64,4 +50,3 @@ internal constructor(metricExporter: io.opentelemetry.sdk.metrics.export.MetricE
         const val DEFAULT_SCHEDULE_DELAY_MINUTES: Long = 1
     }
 }
-*/
