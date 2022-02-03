@@ -20,7 +20,7 @@ allprojects {
 val doNotPublish = setOf("gradle-dependency")
 
 subprojects {
-    group = "io.opentelemetry"
+    group = "io.opentelemetry.kotlin"
     version = rootProject.version
     tasks {
         withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
