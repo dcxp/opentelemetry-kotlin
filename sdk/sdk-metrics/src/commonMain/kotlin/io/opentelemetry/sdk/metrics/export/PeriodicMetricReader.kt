@@ -3,10 +3,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 package io.opentelemetry.sdk.metrics.export
-/*
+
 import io.opentelemetry.sdk.common.CompletableResultCode
 import io.opentelemetry.sdk.metrics.data.AggregationTemporality
-import kotlin.jvm.Volatile
+import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.update
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.nanoseconds
 
 /**
  * Wraps a [MetricExporter] and automatically reads and exports the metrics every export
@@ -16,79 +26,44 @@ import kotlin.jvm.Volatile
 class PeriodicMetricReader internal constructor(
     producer: MetricProducer,
     exporter: MetricExporter,
-    scheduler: ScheduledExecutorService?
 ) : MetricReader {
     private val producer: MetricProducer
     private val exporter: MetricExporter
-    private val scheduler: ScheduledExecutorService?
-    private val scheduled: Scheduled
-    private val lock = Any()
+    private val scheduled = Scheduled()
 
-    @Nullable
-    @Volatile
-    private var scheduledFuture: ScheduledFuture<*>? = null
+    private val scheduledFuture = atomic<Job?>(null)
 
     init {
         this.producer = producer
         this.exporter = exporter
-        this.scheduler = scheduler
-        scheduled = Scheduled()
     }
 
-    override val supportedTemporality: EnumSet<AggregationTemporality>
-        get() = exporter.getSupportedTemporality()
+    override val supportedTemporality: Set<AggregationTemporality>
+        get() = exporter.supportedTemporality
     override val preferredTemporality: AggregationTemporality?
-        get() = exporter.getPreferredTemporality()
+        get() = exporter.preferredTemporality
 
     override fun flush(): CompletableResultCode {
         return scheduled.doRun()
     }
 
     override fun shutdown(): CompletableResultCode {
-        val result = CompletableResultCode()
-        val scheduledFuture: ScheduledFuture<*>? = scheduledFuture
-        if (scheduledFuture != null) {
-            scheduledFuture.cancel(false)
-        }
-        scheduler.shutdown()
-        try {
-            scheduler.awaitTermination(5, TimeUnit.SECONDS)
-            val flushResult = scheduled.doRun()
-            flushResult.join(5, TimeUnit.SECONDS)
-        } catch (e: InterruptedException) {
-            // force a shutdown if the export hasn't finished.
-            scheduler.shutdownNow()
-            // reset the interrupted status
-            java.lang.Thread.currentThread().interrupt()
-        } finally {
-            val shutdownResult = scheduled.shutdown()
-            shutdownResult.whenComplete(
-                kotlin.jvm.functions.Function1 < ?
-                super kotlin . coroutines . Continuation <? super kotlin . Unit >, ? extends java.lang.Object>< in kotlin.coroutines.Continuation<? super kotlin.Unit>< in kotlin.Unit?>?, out Any?> ({
-                if (!shutdownResult.isSuccess) {
-                    result.fail()
-                } else {
-                    result.succeed()
-                }
-            }))
-        }
-        return result
+        this.scheduledFuture.value?.cancel()
+        val lastRun = flush()
+        val shutdownResult = scheduled.shutdown()
+        return CompletableResultCode.ofAll(listOf(lastRun, shutdownResult))
     }
-
     fun start(intervalNanos: Long) {
-        synchronized(lock) {
-            if (scheduledFuture != null) {
-                return
-            }
-            scheduledFuture = scheduler.scheduleAtFixedRate(
-                scheduled, intervalNanos, intervalNanos, TimeUnit.NANOSECONDS
-            )
+        start(intervalNanos.nanoseconds)
+    }
+    fun start(interval: Duration) {
+        scheduledFuture.update {
+            it ?: scheduled.scheduleAtFixedRate(interval, interval)
         }
     }
 
-    private inner class Scheduled private constructor() : Runnable {
-        private val exportAvailable: java.util.concurrent.atomic.AtomicBoolean =
-            java.util.concurrent.atomic.AtomicBoolean(true)
+    private inner class Scheduled constructor() : Runnable {
+        private val exportAvailable = atomic(true)
 
         override fun run() {
             // Ignore the CompletableResultCode from doRun() in order to keep run() asynchronous
@@ -101,22 +76,20 @@ class PeriodicMetricReader internal constructor(
             if (exportAvailable.compareAndSet(true, false)) {
                 try {
                     val result: CompletableResultCode = exporter.export(producer.collectAllMetrics())
-                    result.whenComplete(
-                        kotlin.jvm.functions.Function1 < ?
-                        super kotlin . coroutines . Continuation <? super kotlin . Unit >, ? extends java.lang.Object>< in kotlin.coroutines.Continuation<? super kotlin.Unit>< in kotlin.Unit?>?, out Any?> ({
-                        if (!result.isSuccess) {
+                    result.whenComplete{
+                        /*if (!result.isSuccess) {
                             logger.log(java.util.logging.Level.FINE, "Exporter failed")
-                        }
+                        }*/
                         flushResult.succeed()
-                        exportAvailable.set(true)
-                    }))
+                        exportAvailable.lazySet(true)
+                    }
                 } catch (t: Throwable) {
-                    exportAvailable.set(true)
-                    logger.log(java.util.logging.Level.WARNING, "Exporter threw an Exception", t)
+                    exportAvailable.lazySet(true)
+                    //logger.log(java.util.logging.Level.WARNING, "Exporter threw an Exception", t)
                     flushResult.fail()
                 }
             } else {
-                logger.log(java.util.logging.Level.FINE, "Exporter busy. Dropping metrics.")
+                //logger.log(java.util.logging.Level.FINE, "Exporter busy. Dropping metrics.")
                 flushResult.fail()
             }
             return flushResult
@@ -128,8 +101,8 @@ class PeriodicMetricReader internal constructor(
     }
 
     companion object {
-        private val logger: java.util.logging.Logger =
-            java.util.logging.Logger.getLogger(PeriodicMetricReader::class.java.getName())
+        //private val logger: java.util.logging.Logger =
+        //    java.util.logging.Logger.getLogger(PeriodicMetricReader::class.java.getName())
 
         /**
          * Returns a new [MetricReaderFactory] which can be registered to a [ ] to start a [PeriodicMetricReader]
@@ -145,4 +118,16 @@ class PeriodicMetricReader internal constructor(
         }
     }
 }
-*/
+
+fun Runnable.scheduleAtFixedRate(initialDelay: Duration, period: Duration): Job {
+    val runnable = this
+    val job = CoroutineScope(Dispatchers.Unconfined)
+        .launch {
+            delay(initialDelay)
+            while(isActive){
+                runnable.run()
+                delay(period)
+            }
+        }
+    return job
+}
