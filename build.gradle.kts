@@ -60,8 +60,8 @@ rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJ
 tasks.register("checkMac") {
     dependsOnTaskOfSubprojectsByName("macosArm64Test")
     dependsOnTaskOfSubprojectsByName("macosX64Test")
-    dependsOnTaskOfSubprojectsByName("IosArm64Test")
-    dependsOnTaskOfSubprojectsByName("IosArm32Test")
+    dependsOnTaskOfSubprojectsByName("iosArm64Test")
+    dependsOnTaskOfSubprojectsByName("iosArm32Test")
 }
 
 tasks.register("checkWindows") {
@@ -70,7 +70,7 @@ tasks.register("checkWindows") {
 
 tasks.register("checkLinux") {
     dependsOnTaskOfSubprojectsByName("jvmTest")
-    dependsOnTaskOfSubprojectsByName("JsTest")
+    dependsOnTaskOfSubprojectsByName("jsTest")
     dependsOnTaskOfSubprojectsByName("linuxX64Test")
     dependsOnTaskOfSubprojectsByName("linuxArm32HfpTest")
 }
@@ -102,7 +102,9 @@ tasks.register("publishLinux") {
 }
 
 fun getTaskOfSubprojectsByName(name: String): List<Task> {
-    return project.subprojects.mapNotNull { project -> project.tasks.findByName(name) }
+    val list = project.subprojects.mapNotNull { project -> project.tasks.findByName(name) }
+    println("Warning no tasks found with name: $name")
+    return list
 }
 
 fun Task.dependsOnTaskOfSubprojectsByName(name: String){
