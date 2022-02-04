@@ -137,8 +137,6 @@ class DoubleHistogramAggregator(
             doRecordDouble(value.toDouble())
         }
 
-        private data class SumWrapper(
-            val sum: Double = 0.0
-        )
+        private data class SumWrapper(val sum: Double = 0.0)
     }
 }

@@ -15,7 +15,8 @@ import io.opentelemetry.kotlin.sdk.trace.data.SpanData
 import io.opentelemetry.kotlin.sdk.trace.data.StatusData
 
 /**
- * Immutable representation of all data collected by the [io.opentelemetry.kotlin.api.trace.Span] class.
+ * Immutable representation of all data collected by the [io.opentelemetry.kotlin.api.trace.Span]
+ * class.
  */
 data class TestSpanData
 internal constructor(

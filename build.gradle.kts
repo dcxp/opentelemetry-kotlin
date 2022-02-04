@@ -6,7 +6,7 @@ plugins {
 
 if (System.getenv("GITHUB_RUN_NUMBER") != null) {
     version = "1.0.${System.getenv("GITHUB_RUN_NUMBER")}"
-}else{
+} else {
     version = "1.0.0"
 }
 
@@ -31,7 +31,7 @@ subprojects {
             isReproducibleFileOrder = true
         }
     }
-    if(doNotPublish.contains(this.name)){
+    if (doNotPublish.contains(this.name)) {
         return@subprojects
     }
     apply(plugin = "maven-publish")
@@ -41,8 +41,10 @@ subprojects {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/dcxp/opentelemetry-kotlin")
                 credentials {
-                    username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
-                    password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+                    username =
+                        project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                    password =
+                        project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
                 }
             }
         }

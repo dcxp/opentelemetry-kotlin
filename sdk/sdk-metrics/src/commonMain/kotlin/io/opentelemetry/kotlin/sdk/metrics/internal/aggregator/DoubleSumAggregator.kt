@@ -30,9 +30,7 @@ class DoubleSumAggregator(
     private val reservoirSupplier: Supplier<ExemplarReservoir>
 ) : AbstractSumAggregator<DoubleAccumulation>(instrumentDescriptor) {
 
-    override fun createHandle():
-        AggregatorHandle<
-            DoubleAccumulation> {
+    override fun createHandle(): AggregatorHandle<DoubleAccumulation> {
         return Handle(reservoirSupplier.get())
     }
 
@@ -41,9 +39,7 @@ class DoubleSumAggregator(
         attributes: Attributes,
         context: Context
     ): DoubleAccumulation {
-        return DoubleAccumulation.create(
-            value
-        )
+        return DoubleAccumulation.create(value)
     }
 
     override fun merge(
@@ -70,8 +66,7 @@ class DoubleSumAggregator(
         resource: Resource,
         instrumentationLibraryInfo: InstrumentationLibraryInfo,
         descriptor: MetricDescriptor,
-        accumulationByLabels:
-            Map<Attributes, DoubleAccumulation>,
+        accumulationByLabels: Map<Attributes, DoubleAccumulation>,
         temporality: AggregationTemporality,
         startEpochNanos: Long,
         lastCollectionEpoch: Long,
@@ -96,30 +91,20 @@ class DoubleSumAggregator(
         )
     }
 
-    internal class Handle(exemplarReservoir: ExemplarReservoir)  :
-        AggregatorHandle<
-            DoubleAccumulation>(
-            exemplarReservoir
-        ) {
-        //Wrapper is needed because of a deadlock in native if a double atomic is directly updated
+    internal class Handle(exemplarReservoir: ExemplarReservoir) :
+        AggregatorHandle<DoubleAccumulation>(exemplarReservoir) {
+        // Wrapper is needed because of a deadlock in native if a double atomic is directly updated
         private val current = atomic(SumWrapper())
 
-        override fun doAccumulateThenReset(
-            exemplars: List<ExemplarData>
-        ): DoubleAccumulation {
+        override fun doAccumulateThenReset(exemplars: List<ExemplarData>): DoubleAccumulation {
             val currentSum = current.getAndSet(SumWrapper()).sum
             return DoubleAccumulation.create(currentSum, exemplars)
         }
 
         override fun doRecordDouble(value: Double) {
-            current.update {
-                it.copy(sum = it.sum + value )
-            }
+            current.update { it.copy(sum = it.sum + value) }
         }
 
-        private data class SumWrapper(
-            val sum: Double = 0.0
-        )
+        private data class SumWrapper(val sum: Double = 0.0)
     }
-
 }

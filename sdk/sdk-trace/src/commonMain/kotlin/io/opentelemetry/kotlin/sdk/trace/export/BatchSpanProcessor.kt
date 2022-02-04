@@ -121,7 +121,8 @@ internal constructor(
         val batch: List<SpanData> by batchInternal
 
         init {
-            val meter = GlobalMeterProvider.get().meterBuilder("io.opentelemetry.kotlin.sdk.trace").build()
+            val meter =
+                GlobalMeterProvider.get().meterBuilder("io.opentelemetry.kotlin.sdk.trace").build()
             val processedSpansCounter =
                 meter
                     .counterBuilder("processedSpans")

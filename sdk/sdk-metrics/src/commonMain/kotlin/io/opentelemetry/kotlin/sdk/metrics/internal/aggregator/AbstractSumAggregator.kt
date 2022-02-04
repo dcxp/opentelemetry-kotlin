@@ -12,8 +12,7 @@ abstract class AbstractSumAggregator<T>(instrumentDescriptor: InstrumentDescript
 
     init {
         isMonotonic =
-            io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.MetricDataUtils.isMonotonicInstrument(
-                instrumentDescriptor
-            )
+            io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.MetricDataUtils
+                .isMonotonicInstrument(instrumentDescriptor)
     }
 }

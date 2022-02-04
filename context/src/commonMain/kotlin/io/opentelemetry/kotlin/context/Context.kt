@@ -49,13 +49,13 @@ package io.opentelemetry.kotlin.context
  *
  * Context propagation is not trivial, and when done incorrectly can lead to broken traces or even
  * mixed traces. We provide a debug mechanism for context propagation, which can be enabled by
- * setting `-Dio.opentelemetry.kotlin.context.enableStrictContext=true` in your JVM args. This will enable
- * a strict checker that makes sure that [Scope]s are closed on the correct thread and that they are
- * not garbage collected before being closed. This is done with some relatively expensive stack
- * trace walking. It is highly recommended to enable this in unit tests and staging environments,
- * and you may consider enabling it in production if you have the CPU budget or have very strict
- * requirements on context being propagated correctly (i.e., because you use context in a
- * multi-tenant system). For kotlin coroutine users, this will also detect invalid usage of [
+ * setting `-Dio.opentelemetry.kotlin.context.enableStrictContext=true` in your JVM args. This will
+ * enable a strict checker that makes sure that [Scope]s are closed on the correct thread and that
+ * they are not garbage collected before being closed. This is done with some relatively expensive
+ * stack trace walking. It is highly recommended to enable this in unit tests and staging
+ * environments, and you may consider enabling it in production if you have the CPU budget or have
+ * very strict requirements on context being propagated correctly (i.e., because you use context in
+ * a multi-tenant system). For kotlin coroutine users, this will also detect invalid usage of [
  * ][.makeCurrent] from coroutines and suspending functions. This detection relies on internal APIs
  * of kotlin coroutines and may not function across all versions - let us know if you find a version
  * of kotlin coroutines where this mechanism does not function.

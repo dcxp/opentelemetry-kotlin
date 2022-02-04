@@ -25,7 +25,10 @@ internal class ArrayBasedTraceStateBuilder : TraceStateBuilder {
      * and the vendor id is limited to 13 characters. If in the multi-tenant vendor format, then the
      * first character may additionally be numeric.
      */
-    override fun put(key: String, value: String): io.opentelemetry.kotlin.api.trace.TraceStateBuilder {
+    override fun put(
+        key: String,
+        value: String
+    ): io.opentelemetry.kotlin.api.trace.TraceStateBuilder {
         if (!isKeyValid(key) || !isValueValid(value) || entries.size >= MAX_KEY_VALUE_PAIRS) {
             return this
         }

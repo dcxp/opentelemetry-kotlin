@@ -70,11 +70,8 @@ internal class TemporalMetricStorage<T>(
                 // We need to make sure the current delta recording gets merged into the previous
                 // cumulative
                 // for the next cumulative measurement.
-                io.opentelemetry.kotlin.sdk.metrics.internal.state.MetricStorageUtils.mergeInPlace<T>(
-                    last.accumulation,
-                    currentAccumulation,
-                    aggregator
-                )
+                io.opentelemetry.kotlin.sdk.metrics.internal.state.MetricStorageUtils.mergeInPlace<
+                    T>(last.accumulation, currentAccumulation, aggregator)
                 result = last.accumulation
             }
         }

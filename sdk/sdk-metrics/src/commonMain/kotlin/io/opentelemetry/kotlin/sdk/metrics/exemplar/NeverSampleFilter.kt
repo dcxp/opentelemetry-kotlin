@@ -25,6 +25,7 @@ internal class NeverSampleFilter private constructor() : ExemplarFilter {
     }
 
     companion object {
-        val INSTANCE: io.opentelemetry.kotlin.sdk.metrics.exemplar.ExemplarFilter = NeverSampleFilter()
+        val INSTANCE: io.opentelemetry.kotlin.sdk.metrics.exemplar.ExemplarFilter =
+            NeverSampleFilter()
     }
 }

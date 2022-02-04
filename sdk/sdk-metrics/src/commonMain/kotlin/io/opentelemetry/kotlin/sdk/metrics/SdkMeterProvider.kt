@@ -111,7 +111,8 @@ internal constructor(
         MetricProducer {
 
         override fun collectAllMetrics(): Collection<MetricData> {
-            val meters: Collection<io.opentelemetry.kotlin.sdk.metrics.SdkMeter> = registry.components
+            val meters: Collection<io.opentelemetry.kotlin.sdk.metrics.SdkMeter> =
+                registry.components
             // Suppress too-frequent-collection.
             val currentNanoTime: Long = sharedState.clock.nanoTime()
             val pastNanoTime: Long = lastCollectionTimestamp.value

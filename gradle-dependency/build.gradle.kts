@@ -38,14 +38,13 @@ kotlin {
     }
 
     sourceSets {
-
-        val kotlinVersion="1.6.10"
-        val atomicFu="0.17.0"
-        val kotlinxDatetime="0.3.2"
-        val kotlinxCollectionsImmutable="0.3.5"
-        val uuid="0.4.0"
-        val koTestVersion="5.1.0"
-        val coroutineVersion="1.6.0"
+        val kotlinVersion = "1.6.10"
+        val atomicFu = "0.17.0"
+        val kotlinxDatetime = "0.3.2"
+        val kotlinxCollectionsImmutable = "0.3.5"
+        val uuid = "0.4.0"
+        val koTestVersion = "5.1.0"
+        val coroutineVersion = "1.6.0"
 
         val commonMain by getting {
             dependencies {
@@ -56,16 +55,16 @@ kotlin {
                 )
                 implementation("com.benasher44:uuid:$uuid")
 
-                //Kotlin
+                // Kotlin
                 implementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
                 implementation("org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
-                //Coroutines
+                // Coroutines
                 implementation(
                     "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion" + "-native-mt"
                 )
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
-                //Kotest
+                // Kotest
                 implementation("io.kotest:kotest-assertions-core:$koTestVersion")
             }
         }

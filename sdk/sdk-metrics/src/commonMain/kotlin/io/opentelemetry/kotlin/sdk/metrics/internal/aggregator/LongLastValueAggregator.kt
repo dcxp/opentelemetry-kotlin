@@ -56,7 +56,9 @@ class LongLastValueAggregator(private val reservoirSupplier: Supplier<ExemplarRe
         instrumentationLibraryInfo: InstrumentationLibraryInfo,
         descriptor: MetricDescriptor,
         accumulationByLabels:
-            Map<Attributes, io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.LongAccumulation>,
+            Map<
+                Attributes,
+                io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.LongAccumulation>,
         temporality: AggregationTemporality,
         startEpochNanos: Long,
         lastCollectionEpoch: Long,
@@ -70,26 +72,29 @@ class LongLastValueAggregator(private val reservoirSupplier: Supplier<ExemplarRe
             descriptor.description,
             descriptor.unit,
             LongGaugeData.create(
-                io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.MetricDataUtils.toLongPointList(
-                    accumulationByLabels,
-                    if (temporality === AggregationTemporality.CUMULATIVE) startEpochNanos
-                    else lastCollectionEpoch,
-                    epochNanos
-                )
+                io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.MetricDataUtils
+                    .toLongPointList(
+                        accumulationByLabels,
+                        if (temporality === AggregationTemporality.CUMULATIVE) startEpochNanos
+                        else lastCollectionEpoch,
+                        epochNanos
+                    )
             )
         )
     }
 
     internal class Handle(exemplarReservoir: ExemplarReservoir) :
         io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.AggregatorHandle<
-            io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.LongAccumulation>(exemplarReservoir) {
+            io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.LongAccumulation>(
+            exemplarReservoir
+        ) {
         private val current = atomic(DEFAULT_VALUE)
 
         override fun doAccumulateThenReset(
             exemplars: List<ExemplarData>
         ): io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.LongAccumulation {
-            return io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.LongAccumulation.Companion
-                .create(current.getAndSet(DEFAULT_VALUE), exemplars)
+            return io.opentelemetry.kotlin.sdk.metrics.internal.aggregator.LongAccumulation
+                .Companion.create(current.getAndSet(DEFAULT_VALUE), exemplars)
         }
 
         override fun doRecordLong(value: Long) {

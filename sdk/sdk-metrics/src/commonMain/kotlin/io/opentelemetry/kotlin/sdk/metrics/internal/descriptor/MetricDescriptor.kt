@@ -44,14 +44,14 @@ interface MetricDescriptor {
                 description,
                 unit,
                 null,
-                io.opentelemetry.kotlin.sdk.metrics.internal.descriptor.InstrumentDescriptor.Companion
-                    .create(
-                        name,
-                        description,
-                        unit,
-                        InstrumentType.OBSERVABLE_GAUGE,
-                        InstrumentValueType.DOUBLE
-                    )
+                io.opentelemetry.kotlin.sdk.metrics.internal.descriptor.InstrumentDescriptor
+                    .Companion.create(
+                    name,
+                    description,
+                    unit,
+                    InstrumentType.OBSERVABLE_GAUGE,
+                    InstrumentValueType.DOUBLE
+                )
             )
         }
 

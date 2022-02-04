@@ -10,8 +10,8 @@ package io.opentelemetry.kotlin.api.trace
  * Users may choose to use manual or automatic Context propagation. Because of that this class
  * offers APIs to facilitate both usages.
  *
- * The automatic context propagation is done using [io.opentelemetry.kotlin.context.Context] which is a
- * gRPC independent implementation for in-process Context propagation mechanism which can carry
+ * The automatic context propagation is done using [io.opentelemetry.kotlin.context.Context] which
+ * is a gRPC independent implementation for in-process Context propagation mechanism which can carry
  * scoped-values across API boundaries and between threads. Users of the library must propagate the
  * [io.opentelemetry.kotlin.context.Context] between different threads.
  *

@@ -142,7 +142,8 @@ internal class SdkTracerTest {
 
     companion object {
         private const val SPAN_NAME = "span_name"
-        private const val INSTRUMENTATION_LIBRARY_NAME = "io.opentelemetry.kotlin.sdk.trace.TracerSdkTest"
+        private const val INSTRUMENTATION_LIBRARY_NAME =
+            "io.opentelemetry.kotlin.sdk.trace.TracerSdkTest"
         private const val INSTRUMENTATION_LIBRARY_VERSION = "0.2.0"
         private val instrumentationLibraryInfo: InstrumentationLibraryInfo =
             InstrumentationLibraryInfo.create(

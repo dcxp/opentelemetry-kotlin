@@ -7,4 +7,3 @@ expect class KotlinTarget {
         fun isNative(): Boolean
     }
 }
-

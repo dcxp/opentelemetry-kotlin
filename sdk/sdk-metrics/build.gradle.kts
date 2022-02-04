@@ -13,31 +13,21 @@ val ideaActive = System.getProperty("idea.active") == "true"
 kotlin {
     jvm { withJava() }
     js(IR) {
-        nodejs{
-            testTask {
-                useMocha {
-                    timeout = "80000"
-                }
-            }
-        }
-        browser{
-            testTask {
-                useMocha {
-                    timeout = "80000"
-                }
-            }
-        }
+        nodejs { testTask { useMocha { timeout = "80000" } } }
+        browser { testTask { useMocha { timeout = "80000" } } }
     }
 
     if (ideaActive) {
-      val os = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.getCurrentOperatingSystem()
-      if(os.isWindows){
-        mingwX64()
-      }else if(os.isLinux){
-        linuxX64()
-      }else if(os.isMacOsX){
-        macosX64("darwin")
-      }
+        val os =
+            org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+                .getCurrentOperatingSystem()
+        if (os.isWindows) {
+            mingwX64()
+        } else if (os.isLinux) {
+            linuxX64()
+        } else if (os.isMacOsX) {
+            macosX64("darwin")
+        }
     } else {
         macosX64()
         iosArm32()
@@ -56,7 +46,7 @@ kotlin {
         mingwX64()
         linuxX64()
     }
-    
+
     sourceSets {
         all { languageSettings.optIn("kotlin.RequiresOptIn") }
 
@@ -72,12 +62,8 @@ kotlin {
                 api(project(":sdk:sdk-common"))
 
                 implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
-                implementation(
-                    "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
-                )
-                implementation(
-                    "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" + "-native-mt"
-                )
+                implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" + "-native-mt")
             }
         }
         val commonTest by getting {

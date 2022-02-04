@@ -14,8 +14,8 @@ import io.opentelemetry.kotlin.sdk.common.CompletableResultCode
  */
 interface SpanProcessor : Closeable {
     /**
-     * Called when a [io.opentelemetry.kotlin.api.trace.Span] is started, if the [ ][Span.isRecording]
-     * returns true.
+     * Called when a [io.opentelemetry.kotlin.api.trace.Span] is started, if the [ ]
+     * [Span.isRecording] returns true.
      *
      * This method is called synchronously on the execution thread, should not throw or block the
      * execution thread.

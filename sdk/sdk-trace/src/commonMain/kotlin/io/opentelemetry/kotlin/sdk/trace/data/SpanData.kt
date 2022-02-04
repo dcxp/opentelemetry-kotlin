@@ -11,7 +11,8 @@ import io.opentelemetry.kotlin.sdk.common.InstrumentationLibraryInfo
 import io.opentelemetry.kotlin.sdk.resources.Resource
 
 /**
- * Immutable representation of all data collected by the [io.opentelemetry.kotlin.api.trace.Span] class.
+ * Immutable representation of all data collected by the [io.opentelemetry.kotlin.api.trace.Span]
+ * class.
  */
 interface SpanData {
     /**

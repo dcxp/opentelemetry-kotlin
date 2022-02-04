@@ -19,11 +19,12 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.nanoseconds
 
 /**
- * Wraps a [MetricExporter] and automatically reads and exports the metrics every export
- * interval. Metrics may also be dropped when it becomes time to export again, and there is an
- * export in progress.
+ * Wraps a [MetricExporter] and automatically reads and exports the metrics every export interval.
+ * Metrics may also be dropped when it becomes time to export again, and there is an export in
+ * progress.
  */
-class PeriodicMetricReader internal constructor(
+class PeriodicMetricReader
+internal constructor(
     producer: MetricProducer,
     exporter: MetricExporter,
 ) : MetricReader {
@@ -57,9 +58,7 @@ class PeriodicMetricReader internal constructor(
         start(intervalNanos.nanoseconds)
     }
     fun start(interval: Duration) {
-        scheduledFuture.update {
-            it ?: scheduled.scheduleAtFixedRate(interval, interval)
-        }
+        scheduledFuture.update { it ?: scheduled.scheduleAtFixedRate(interval, interval) }
     }
 
     private inner class Scheduled constructor() : Runnable {
@@ -75,8 +74,9 @@ class PeriodicMetricReader internal constructor(
             val flushResult = CompletableResultCode()
             if (exportAvailable.compareAndSet(true, false)) {
                 try {
-                    val result: CompletableResultCode = exporter.export(producer.collectAllMetrics())
-                    result.whenComplete{
+                    val result: CompletableResultCode =
+                        exporter.export(producer.collectAllMetrics())
+                    result.whenComplete {
                         /*if (!result.isSuccess) {
                             logger.log(java.util.logging.Level.FINE, "Exporter failed")
                         }*/
@@ -85,11 +85,11 @@ class PeriodicMetricReader internal constructor(
                     }
                 } catch (t: Throwable) {
                     exportAvailable.lazySet(true)
-                    //logger.log(java.util.logging.Level.WARNING, "Exporter threw an Exception", t)
+                    // logger.log(java.util.logging.Level.WARNING, "Exporter threw an Exception", t)
                     flushResult.fail()
                 }
             } else {
-                //logger.log(java.util.logging.Level.FINE, "Exporter busy. Dropping metrics.")
+                // logger.log(java.util.logging.Level.FINE, "Exporter busy. Dropping metrics.")
                 flushResult.fail()
             }
             return flushResult
@@ -101,18 +101,18 @@ class PeriodicMetricReader internal constructor(
     }
 
     companion object {
-        //private val logger: java.util.logging.Logger =
+        // private val logger: java.util.logging.Logger =
         //    java.util.logging.Logger.getLogger(PeriodicMetricReader::class.java.getName())
 
         /**
-         * Returns a new [MetricReaderFactory] which can be registered to a [ ] to start a [PeriodicMetricReader]
-         * exporting once every minute on a new daemon thread.
+         * Returns a new [MetricReaderFactory] which can be registered to a [ ] to start a
+         * [PeriodicMetricReader] exporting once every minute on a new daemon thread.
          */
         fun newMetricReaderFactory(exporter: MetricExporter): MetricReaderFactory {
             return builder(exporter).newMetricReaderFactory()
         }
 
-        /** Returns a new [PeriodicMetricReaderBuilder].  */
+        /** Returns a new [PeriodicMetricReaderBuilder]. */
         fun builder(exporter: MetricExporter): PeriodicMetricReaderBuilder {
             return PeriodicMetricReaderBuilder(exporter)
         }
@@ -121,10 +121,10 @@ class PeriodicMetricReader internal constructor(
 
 fun Runnable.scheduleAtFixedRate(initialDelay: Duration, period: Duration): Job {
     val runnable = this
-    val job = CoroutineScope(Dispatchers.Unconfined)
-        .launch {
+    val job =
+        CoroutineScope(Dispatchers.Unconfined).launch {
             delay(initialDelay)
-            while(isActive){
+            while (isActive) {
                 runnable.run()
                 delay(period)
             }

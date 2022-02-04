@@ -240,7 +240,10 @@ interface Span : ImplicitContextKeyed {
      * @param description the description of the `Status`.
      * @return this.
      */
-    fun setStatus(statusCode: io.opentelemetry.kotlin.api.trace.StatusCode, description: String): Span
+    fun setStatus(
+        statusCode: io.opentelemetry.kotlin.api.trace.StatusCode,
+        description: String
+    ): Span
     /**
      * Records information about the [Throwable] to the [Span].
      *

@@ -46,7 +46,7 @@ kotlin {
         mingwX64()
         linuxX64()
     }
-    
+
     sourceSets {
         all { languageSettings.optIn("kotlin.RequiresOptIn") }
 
@@ -61,12 +61,8 @@ kotlin {
                 api(project(":api:all"))
 
                 implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
-                implementation(
-                    "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
-                )
-                implementation(
-                    "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" + "-native-mt"
-                )
+                implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" + "-native-mt")
             }
         }
         val commonTest by getting {

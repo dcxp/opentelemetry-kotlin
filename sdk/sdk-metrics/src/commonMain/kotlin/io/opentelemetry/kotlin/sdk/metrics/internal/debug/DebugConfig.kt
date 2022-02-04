@@ -22,7 +22,7 @@ object DebugConfig {
      */
     var isMetricsDebugEnabled
         get() = isMetricsDebugEnabled_intern.value
-        private set(value){
+        private set(value) {
             isMetricsDebugEnabled_intern.lazySet(value)
         }
 

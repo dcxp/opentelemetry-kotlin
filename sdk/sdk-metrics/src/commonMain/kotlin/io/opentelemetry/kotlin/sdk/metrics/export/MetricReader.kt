@@ -10,8 +10,8 @@ import io.opentelemetry.kotlin.sdk.metrics.data.AggregationTemporality
 /**
  * A registered reader of metrics.
  *
- * This interface provides the [io.opentelemetry.kotlin.sdk.metrics.SdkMeterProvider] a mechanism of global
- * control over metrics during shutdown or memory pressure scenarios.
+ * This interface provides the [io.opentelemetry.kotlin.sdk.metrics.SdkMeterProvider] a mechanism of
+ * global control over metrics during shutdown or memory pressure scenarios.
  */
 interface MetricReader {
     /** Return The set of all supported temporalities for this exporter. */

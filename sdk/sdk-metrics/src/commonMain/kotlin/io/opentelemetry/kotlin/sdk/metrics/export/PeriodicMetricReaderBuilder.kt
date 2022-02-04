@@ -11,17 +11,14 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.nanoseconds
 
-
 /** A builder for [PeriodicMetricReader]. */
-class PeriodicMetricReaderBuilder constructor(
-    private val metricExporter: MetricExporter
-) {
+class PeriodicMetricReaderBuilder constructor(private val metricExporter: MetricExporter) {
     private val interval = atomic(DEFAULT_SCHEDULE_DELAY_MINUTES.minutes)
     /**
      * Sets the interval of reads. If unset, defaults to {@value DEFAULT_SCHEDULE_DELAY_MINUTES}min.
      */
     fun setInterval(interval: Long, unit: DateTimeUnit): PeriodicMetricReaderBuilder {
-        require(interval > 0){ "interval must be positive" }
+        require(interval > 0) { "interval must be positive" }
         return setInterval(unit.normalizeToNanos(interval).nanoseconds)
     }
 
@@ -29,7 +26,7 @@ class PeriodicMetricReaderBuilder constructor(
      * Sets the interval of reads. If unset, defaults to {@value DEFAULT_SCHEDULE_DELAY_MINUTES}min.
      */
     fun setInterval(interval: Duration): PeriodicMetricReaderBuilder {
-        require(interval.isPositive()){ "interval must be positive" }
+        require(interval.isPositive()) { "interval must be positive" }
         this.interval.lazySet(interval)
         return this
     }

@@ -22,10 +22,10 @@ import io.opentelemetry.kotlin.context.propagation.TextMapSetter
 import io.opentelemetry.kotlin.sdk.common.Clock
 import io.opentelemetry.kotlin.sdk.common.CompletableResultCode
 import io.opentelemetry.kotlin.sdk.resources.Resource
+import io.opentelemetry.kotlin.sdk.testing.time.TestClock
 import io.opentelemetry.kotlin.sdk.trace.IdGenerator
 import io.opentelemetry.kotlin.sdk.trace.SdkTracerProvider
 import io.opentelemetry.kotlin.sdk.trace.SpanLimits
-import io.opentelemetry.kotlin.sdk.testing.time.TestClock
 import io.opentelemetry.kotlin.sdk.trace.data.LinkData
 import io.opentelemetry.kotlin.sdk.trace.data.SpanData
 import io.opentelemetry.kotlin.sdk.trace.export.SimpleSpanProcessor

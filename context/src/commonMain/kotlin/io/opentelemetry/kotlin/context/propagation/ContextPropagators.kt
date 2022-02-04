@@ -9,9 +9,9 @@ package io.opentelemetry.kotlin.context.propagation
  *
  * This container can be used to access a single, composite propagator for each supported format,
  * which will be responsible for injecting and extracting data for each registered concern (traces,
- * correlations, etc). Propagation will happen through [io.opentelemetry.kotlin.context.Context], from
- * which values will be read upon injection, and which will store values from the extraction step.
- * The resulting `Context` can then be used implicitly or explicitly by the OpenTelemetry API.
+ * correlations, etc). Propagation will happen through [io.opentelemetry.kotlin.context.Context],
+ * from which values will be read upon injection, and which will store values from the extraction
+ * step. The resulting `Context` can then be used implicitly or explicitly by the OpenTelemetry API.
  *
  * Example of usage on the client:
  *
