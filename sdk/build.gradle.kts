@@ -1,1 +1,1 @@
-subprojects { group = "io.opentelemetry.sdk" }
+subprojects { group = "io.opentelemetry.kotlin.sdk" }
