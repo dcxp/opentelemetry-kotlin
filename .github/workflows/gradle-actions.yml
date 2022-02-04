@@ -57,6 +57,9 @@ jobs:
     name: Push maven packages
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: build-gradle-project
+    strategy:
+      matrix:
+        os: [ macOS-latest, windows-latest, ubuntu-latest ]
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
