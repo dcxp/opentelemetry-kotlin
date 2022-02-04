@@ -5,8 +5,10 @@ env:
 jobs:
   build-gradle-project:
     name: Build & Test Gradle Project
-    #if: ${{ github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ macOS-latest, windows-latest, ubuntu-latest ]
+    runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
       - uses: glav/chuck-norris-quote@v1.0
@@ -24,16 +26,38 @@ jobs:
         with:
           gradle-version: wrapper
 
-      - name: Gradle check
+      - name: Check Mac Build
         uses: burrunan/gradle-cache-action@v1
+        if: matrix.os == 'macOS-latest'
         with:
-          arguments: check --scan
+          arguments: checkMac --scan
           gradle-build-scan-report: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check Linux Build
+        uses: burrunan/gradle-cache-action@v1
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          arguments: checkLinux --scan
+          gradle-build-scan-report: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check Windows Build
+        uses: burrunan/gradle-cache-action@v1
+        if: matrix.os == 'windows-latest'
+        with:
+          arguments: checkWindows --scan
+          gradle-build-scan-report: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish-to-maven:
     name: Push maven packages
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: build-gradle-project
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
       - uses: glav/chuck-norris-quote@v1.0
@@ -47,21 +71,33 @@ jobs:
         uses: burrunan/gradle-cache-action@v1
         with:
           gradle-version: wrapper
-      - name: Gradle clean
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          arguments: clean
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Gradle assemble
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          arguments: assemble
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Gradle publish
         uses: burrunan/gradle-cache-action@v1
         with:
           arguments: publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Mac Artifacts
+        uses: burrunan/gradle-cache-action@v1
+        if: matrix.os == 'macOS-latest'
+        with:
+          arguments: publishMac
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Linux Artifacts
+        uses: burrunan/gradle-cache-action@v1
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          arguments: publishLinux
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Windows Artifacts
+        uses: burrunan/gradle-cache-action@v1
+        if: matrix.os == 'windows-latest'
+        with:
+          arguments: publishWindows
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
