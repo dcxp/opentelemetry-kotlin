@@ -58,14 +58,12 @@ rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJ
 }
 // Build pipeline Tasks
 tasks.register("checkMac") {
+    dependsOnTaskOfSubprojectsByName("darwinTest")
     dependsOnTaskOfSubprojectsByName("macosArm64Test")
-    dependsOnTaskOfSubprojectsByName("macosX64Test")
-    dependsOnTaskOfSubprojectsByName("iosArm64Test")
-    dependsOnTaskOfSubprojectsByName("iosArm32Test")
 }
 
 tasks.register("checkWindows") {
-    dependsOnTaskOfSubprojectsByName(":mingwX64Test")
+    dependsOnTaskOfSubprojectsByName("mingwX64Test")
 }
 
 tasks.register("checkLinux") {

@@ -17,9 +17,10 @@ kotlin {
         browser()
     }*/
     if (ideaActive) {
-        // macosX64("darwin")
+        // macosArm64()
     } else {
         macosX64()
+        macosArm64()
         iosArm32()
         iosArm64()
         iosX64()
@@ -27,11 +28,11 @@ kotlin {
         // linuxArm32Hfp()
         // linuxMips32()
         watchosArm32()
-        watchosArm64()
-        watchosX86()
-        watchosX64()
-        tvosArm64()
-        tvosX64()
+//        watchosArm64()
+//        watchosX86()
+//        watchosX64()
+//        tvosArm64()
+//        tvosX64()
         //    androidNativeArm32()
         //    androidNativeArm64()
         mingwX64()
