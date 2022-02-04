@@ -56,3 +56,62 @@ rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJ
     rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>()
         .nodeVersion = "16.13.1"
 }
+// Build pipeline Tasks
+tasks.register("checkMac") {
+    dependsOnTaskOfSubprojectsByName("macosArm64Test")
+    dependsOnTaskOfSubprojectsByName("macosX64Test")
+    dependsOnTaskOfSubprojectsByName("iosArm64Test")
+    dependsOnTaskOfSubprojectsByName("iosArm32Test")
+}
+
+tasks.register("checkWindows") {
+    dependsOnTaskOfSubprojectsByName(":mingwX64Test")
+}
+
+tasks.register("checkLinux") {
+    dependsOnTaskOfSubprojectsByName("jvmTest")
+    dependsOnTaskOfSubprojectsByName("jsTest")
+    dependsOnTaskOfSubprojectsByName("linuxX64Test")
+    dependsOnTaskOfSubprojectsByName("linuxArm32HfpTest")
+}
+
+tasks.register("publishMac") {
+    dependsOnTaskOfSubprojectsByName("publishIosArm32PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishIosArm64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishIosSimulatorArm64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishIosSimulatorArm64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishTvosArm64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishTvosSimulatorArm64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishTvosX64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishWatchosArm32PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishWatchosArm64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishWatchosSimulatorArm64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishWatchosX86PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishMacosArm64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishMacosX64PublicationToMavenRepository")
+}
+
+tasks.register("publishWindows") { dependsOnTaskOfSubprojectsByName("publishMingwX64PublicationToMavenRepository") }
+
+tasks.register("publishLinux") {
+    dependsOnTaskOfSubprojectsByName("publishLinuxX64PublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishLinuxArm32HfpPublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishJvmPublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishJsPublicationToMavenRepository")
+    dependsOnTaskOfSubprojectsByName("publishKotlinMultiplatformPublicationToMavenRepository")
+}
+
+fun getTaskOfSubprojectsByName(name: String): List<Task> {
+    val list = project.subprojects.mapNotNull { project -> project.tasks.findByName(name) }
+    println("Warning no tasks found with name: $name")
+    return list
+}
+
+fun Task.dependsOnTaskOfSubprojectsByName(name: String){
+    this.dependsOn(getTaskOfSubprojectsByName(name))
+}
+/*fun dependsOnTaskOfSubprojectsByName(name: String){
+    getTaskOfSubprojectsByName(name).forEach{task ->
+        task()
+    }
+}*/
