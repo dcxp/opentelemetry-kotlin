@@ -30,7 +30,7 @@ jobs:
         uses: burrunan/gradle-cache-action@v1
         with:
           arguments: tasks
-          
+
       - name: Check Mac Build
         uses: burrunan/gradle-cache-action@v1
         if: matrix.os == 'macOS-latest'
