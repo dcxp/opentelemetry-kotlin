@@ -74,12 +74,6 @@ jobs:
         uses: burrunan/gradle-cache-action@v1
         with:
           gradle-version: wrapper
-      - name: Gradle publish
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          arguments: publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Mac Artifacts
         uses: burrunan/gradle-cache-action@v1
