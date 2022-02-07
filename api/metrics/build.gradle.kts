@@ -36,7 +36,7 @@ kotlin {
         iosX64()
         // linuxArm32Hfp()
         // linuxMips32()
-        watchosArm32()
+//        watchosArm32()
 //        watchosArm64()
 //        watchosX86()
 //        watchosX64()
