@@ -49,7 +49,7 @@ interface ContextPropagators {
      *
      * @return the [TextMapPropagator] propagator to inject and extract data.
      */
-    val textMapPropagator: io.opentelemetry.kotlin.context.propagation.TextMapPropagator
+    val textMapPropagator: TextMapPropagator
 
     companion object {
         /**

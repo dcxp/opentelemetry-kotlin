@@ -5,6 +5,8 @@
 package io.opentelemetry.kotlin.sdk.common
 
 import io.opentelemetry.kotlin.api.common.normalizeToNanos
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.nanoseconds
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.locks.reentrantLock
@@ -16,9 +18,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.withTimeout
 import kotlinx.datetime.DateTimeUnit
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.nanoseconds
 
 /**
  * This class models JDK 8's CompletableFuture to afford migration should Open Telemetry's SDK
@@ -123,37 +124,15 @@ class CompletableResultCode private constructor(state: State) {
      *
      * @return this [CompletableResultCode]
      */
-    /*fun join(timeout: Long, unit: DateTimeUnit): CompletableResultCode {
-        if (isDone) {
-            return this
-        }
-        val latch = CountDownLatch(1)
-        whenComplete(Runnable { latch.countDown() })
-        try {
-            if (!latch.await(timeout, unit)) {
-                return this
-            }
-        } catch (e: InterruptedException) {
-            java.lang.Thread.currentThread().interrupt()
-        }
-        return this
-    }*/
     suspend fun join(timeout: Duration): CompletableResultCode {
         if (isDone) {
             return this
         }
         val semaphore = Semaphore(1, 1)
         this.whenComplete { semaphore.release() }
-        //        val amountOfTrys = 20
-        //        for (i in 0 until amountOfTrys){
-        //            if(semaphore.tryAcquire()){
-        //                return this
-        //            }
-        //            delay(unit.normalizeToMilliseconds(timeout)/ amountOfTrys)
-        //        }
-        //        throw Exception("There was a timout after ${unit.normalizeToMilliseconds(timeout)}
-        // ms")
-        semaphore.acquire()
+        withTimeout(timeout){
+            semaphore.acquire()
+        }
         return this
     }
 
