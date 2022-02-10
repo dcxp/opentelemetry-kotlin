@@ -51,7 +51,7 @@ internal object LazyStorage {
     // ContextStorage, which would be the same class (interface) being instrumented at that time,
     // which would lead to the JVM throwing a LinkageError "attempted duplicate interface
     // definition"
-    fun get(): io.opentelemetry.kotlin.context.ContextStorage {
+    fun get(): ContextStorage {
         return storage
     }
 
