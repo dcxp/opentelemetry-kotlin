@@ -8,6 +8,8 @@ on:
 jobs:
   update-gradle-wrapper:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
 
@@ -15,5 +17,3 @@ jobs:
         run: chmod +x ./gradlew
       - name: Update Gradle Wrapper
         uses: gradle-update/update-gradle-wrapper-action@v1
-        with:
-          repo-token: ${{ secrets.DCXP_DEPENDABOT_PAT }}
