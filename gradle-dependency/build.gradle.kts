@@ -44,7 +44,7 @@ kotlin {
         val kotlinxDatetime = "0.3.2"
         val kotlinxCollectionsImmutable = "0.3.5"
         val uuid = "0.4.0"
-        val koTestVersion = "5.1.0"
+        val koTestVersion = "5.2.1"
         val coroutineVersion = "1.6.0"
 
         val commonMain by getting {
