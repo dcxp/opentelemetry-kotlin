@@ -31,4 +31,10 @@ include(":sdk:sdk-testing")
 
 include(":sdk:sdk-common")
 
+include(":exporters:otlp:common")
+
+include(":exporters:otlp:trace")
+
+include(":exporters:otlp:metrics")
+
 include(":sdk:sdk-all") // include(":combined")
