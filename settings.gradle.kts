@@ -1,7 +1,7 @@
 rootProject.name = "opentelemetry-kotlin"
 
 pluginManagement {
-    val kotlinVersion = "1.6.10"
+    val kotlinVersion = "1.6.20"
     plugins {
         id("org.jetbrains.kotlin.multiplatform") version "$kotlinVersion"
         id("org.jetbrains.kotlin.plugin.serialization") version "$kotlinVersion"
