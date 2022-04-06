@@ -64,9 +64,9 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:1.6.10")
-                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.10")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.10")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.6.20")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.20")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.20")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" + "-native-mt")
                 implementation("io.kotest:kotest-assertions-core:5.2.2")
             }
