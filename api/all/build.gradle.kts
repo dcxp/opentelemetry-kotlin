@@ -58,7 +58,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":context"))
-                implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
+                implementation("org.jetbrains.kotlinx:atomicfu:0.17.2")
             }
         }
         val commonTest by getting {

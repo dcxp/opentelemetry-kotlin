@@ -59,7 +59,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
-                implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
+                implementation("org.jetbrains.kotlinx:atomicfu:0.17.2")
             }
         }
         val commonTest by getting {
