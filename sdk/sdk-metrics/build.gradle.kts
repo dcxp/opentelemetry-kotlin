@@ -71,9 +71,9 @@ kotlin {
             dependencies {
                 api(project(":sdk:sdk-testing"))
 
-                implementation("org.jetbrains.kotlin:kotlin-test:1.6.20")
-                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.20")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.20")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.6.21")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.21")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.21")
                 implementation("io.kotest:kotest-assertions-core:5.2.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
             }
