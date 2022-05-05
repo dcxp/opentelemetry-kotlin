@@ -58,7 +58,7 @@ kotlin {
         val koTestVersion: String by project
         val commonMain by getting {
             dependencies {
-                api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+                api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
                 implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
             }
         }
