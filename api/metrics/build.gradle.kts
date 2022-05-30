@@ -60,7 +60,7 @@ kotlin {
                 api(project(":context"))
                 api(project(":api:all"))
 
-                implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
+                implementation("org.jetbrains.kotlinx:atomicfu:0.17.3")
             }
         }
         val commonTest by getting {
