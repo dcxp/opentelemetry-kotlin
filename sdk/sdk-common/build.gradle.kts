@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
 }
 
-buildscript { dependencies { classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.17.1") } }
+buildscript { dependencies { classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.0") } }
 
 apply(plugin = "kotlinx-atomicfu")
 
