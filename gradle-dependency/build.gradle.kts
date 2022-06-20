@@ -40,7 +40,7 @@ kotlin {
 
     sourceSets {
         val kotlinVersion = "1.6.10"
-        val kotlinxDatetime = "0.3.2"
+        val kotlinxDatetime = "0.3.3"
         val kotlinxCollectionsImmutable = "0.3.5"
         val uuid = "0.4.0"
         val koTestVersion = "5.3.1"
