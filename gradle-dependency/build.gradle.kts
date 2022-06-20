@@ -60,7 +60,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
                 // Coroutines
                 implementation(
-                    "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion" + "-native-mt"
+                    "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
                 )
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
                 // Kotest

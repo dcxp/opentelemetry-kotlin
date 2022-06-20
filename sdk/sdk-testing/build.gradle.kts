@@ -62,7 +62,7 @@ kotlin {
                 implementation(project(":sdk:sdk-common"))
 
                 implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2" + "-native-mt")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
             }
         }
         val commonTest by getting {
