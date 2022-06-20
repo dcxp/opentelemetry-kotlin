@@ -1,9 +1,8 @@
-val kotlinVersion = "1.7.0"
+val kotlinVersion = "1.6.20"
 
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    id("org.jetbrains.kotlinx.kover")
 }
 
 group = "de.snk.dcxp"
@@ -40,11 +39,11 @@ kotlin {
 
     sourceSets {
         val kotlinVersion = "1.6.10"
-        val kotlinxDatetime = "0.3.3"
+        val kotlinxDatetime = "0.3.2"
         val kotlinxCollectionsImmutable = "0.3.5"
         val uuid = "0.4.0"
         val koTestVersion = "5.3.1"
-        val coroutineVersion = "1.6.1"
+        val coroutineVersion = "1.6.2"
 
         val commonMain by getting {
             dependencies {
@@ -60,7 +59,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
                 // Coroutines
                 implementation(
-                    "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion" + "-native-mt"
+                    "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
                 )
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
                 // Kotest
