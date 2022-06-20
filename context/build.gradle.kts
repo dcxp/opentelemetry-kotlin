@@ -4,10 +4,6 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
 }
 
-buildscript { dependencies { classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.17.1") } }
-
-apply(plugin = "kotlinx-atomicfu")
-
 val ideaActive = System.getProperty("idea.active") == "true"
 
 kotlin {
@@ -51,7 +47,6 @@ kotlin {
     sourceSets {
         all { languageSettings.optIn("kotlin.RequiresOptIn") }
 
-        val atomicFu: String by project
         val kotlinVersion: String by project
         val kotlinxDatetime: String by project
         val coroutineVersion: String by project
@@ -59,7 +54,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
-                implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
             }
         }
         val commonTest by getting {
