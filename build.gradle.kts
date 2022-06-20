@@ -17,7 +17,19 @@ allprojects {
     }
 }
 
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.0")
+    }
+}
+
 val doNotPublish = setOf("gradle-dependency")
+
+subprojects {
+    if (this.file("src").exists() && !doNotPublish.contains(this.name)) {
+        apply(plugin = "kotlinx-atomicfu")
+    }
+}
 
 subprojects {
     group = "io.opentelemetry.kotlin"
@@ -53,7 +65,8 @@ subprojects {
 
 // FIXME Temporary WORKAROUND for arm64 Apple Silicon; removabl probably with kotlin 1.6.20
 rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
-    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>()
+    rootProject
+        .the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>()
         .nodeVersion = "16.13.1"
 }
 // Build pipeline Tasks
@@ -62,9 +75,7 @@ tasks.register("checkMac") {
     dependsOnTaskOfSubprojectsByName("macosArm64Test")
 }
 
-tasks.register("checkWindows") {
-    dependsOnTaskOfSubprojectsByName("mingwX64Test")
-}
+tasks.register("checkWindows") { dependsOnTaskOfSubprojectsByName("mingwX64Test") }
 
 tasks.register("checkLinux") {
     dependsOnTaskOfSubprojectsByName("jvmTest")
@@ -76,27 +87,39 @@ tasks.register("checkLinux") {
 tasks.register("publishMac") {
     dependsOnTaskOfSubprojectsByName("publishIosArm32PublicationToGitHubPackagesRepository")
     dependsOnTaskOfSubprojectsByName("publishIosArm64PublicationToGitHubPackagesRepository")
-    dependsOnTaskOfSubprojectsByName("publishIosSimulatorArm64PublicationToGitHubPackagesRepository")
-    dependsOnTaskOfSubprojectsByName("publishIosSimulatorArm64PublicationToGitHubPackagesRepository")
-//    dependsOnTaskOfSubprojectsByName("publishTvosArm64PublicationToGitHubPackagesRepository")
-//    dependsOnTaskOfSubprojectsByName("publishTvosSimulatorArm64PublicationToGitHubPackagesRepository")
-//    dependsOnTaskOfSubprojectsByName("publishTvosX64PublicationToGitHubPackagesRepository")
-//    dependsOnTaskOfSubprojectsByName("publishWatchosArm32PublicationToGitHubPackagesRepository")
-//    dependsOnTaskOfSubprojectsByName("publishWatchosArm64PublicationToGitHubPackagesRepository")
-//    dependsOnTaskOfSubprojectsByName("publishWatchosSimulatorArm64PublicationToGitHubPackagesRepository")
-//    dependsOnTaskOfSubprojectsByName("publishWatchosX86PublicationToGitHubPackagesRepository")
+    dependsOnTaskOfSubprojectsByName(
+        "publishIosSimulatorArm64PublicationToGitHubPackagesRepository"
+    )
+    dependsOnTaskOfSubprojectsByName(
+        "publishIosSimulatorArm64PublicationToGitHubPackagesRepository"
+    )
+    //    dependsOnTaskOfSubprojectsByName("publishTvosArm64PublicationToGitHubPackagesRepository")
+    //
+    // dependsOnTaskOfSubprojectsByName("publishTvosSimulatorArm64PublicationToGitHubPackagesRepository")
+    //    dependsOnTaskOfSubprojectsByName("publishTvosX64PublicationToGitHubPackagesRepository")
+    //
+    // dependsOnTaskOfSubprojectsByName("publishWatchosArm32PublicationToGitHubPackagesRepository")
+    //
+    // dependsOnTaskOfSubprojectsByName("publishWatchosArm64PublicationToGitHubPackagesRepository")
+    //
+    // dependsOnTaskOfSubprojectsByName("publishWatchosSimulatorArm64PublicationToGitHubPackagesRepository")
+    //    dependsOnTaskOfSubprojectsByName("publishWatchosX86PublicationToGitHubPackagesRepository")
     dependsOnTaskOfSubprojectsByName("publishMacosArm64PublicationToGitHubPackagesRepository")
     dependsOnTaskOfSubprojectsByName("publishMacosX64PublicationToGitHubPackagesRepository")
 }
 
-tasks.register("publishWindows") { dependsOnTaskOfSubprojectsByName("publishMingwX64PublicationToGitHubPackagesRepository") }
+tasks.register("publishWindows") {
+    dependsOnTaskOfSubprojectsByName("publishMingwX64PublicationToGitHubPackagesRepository")
+}
 
 tasks.register("publishLinux") {
     dependsOnTaskOfSubprojectsByName("publishLinuxX64PublicationToGitHubPackagesRepository")
     dependsOnTaskOfSubprojectsByName("publishLinuxArm32HfpPublicationToGitHubPackagesRepository")
     dependsOnTaskOfSubprojectsByName("publishJvmPublicationToGitHubPackagesRepository")
     dependsOnTaskOfSubprojectsByName("publishJsPublicationToGitHubPackagesRepository")
-    dependsOnTaskOfSubprojectsByName("publishKotlinMultiplatformPublicationToGitHubPackagesRepository")
+    dependsOnTaskOfSubprojectsByName(
+        "publishKotlinMultiplatformPublicationToGitHubPackagesRepository"
+    )
 }
 
 fun getTaskOfSubprojectsByName(name: String): List<Task> {
@@ -105,7 +128,7 @@ fun getTaskOfSubprojectsByName(name: String): List<Task> {
     return list
 }
 
-fun Task.dependsOnTaskOfSubprojectsByName(name: String){
+fun Task.dependsOnTaskOfSubprojectsByName(name: String) {
     this.dependsOn(getTaskOfSubprojectsByName(name))
 }
 /*fun dependsOnTaskOfSubprojectsByName(name: String){
