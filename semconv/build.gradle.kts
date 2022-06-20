@@ -53,10 +53,10 @@ kotlin {
         val commonMain by getting { dependencies { api(project(":api:all")) } }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:1.6.20")
-                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.20")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.20")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1" + "-native-mt")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.7.0")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:1.7.0")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.7.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2" + "-native-mt")
             }
         }
     }
