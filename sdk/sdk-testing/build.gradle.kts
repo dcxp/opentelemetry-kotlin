@@ -4,10 +4,6 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
 }
 
-buildscript { dependencies { classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.0") } }
-
-apply(plugin = "kotlinx-atomicfu")
-
 val ideaActive = System.getProperty("idea.active") == "true"
 
 kotlin {
