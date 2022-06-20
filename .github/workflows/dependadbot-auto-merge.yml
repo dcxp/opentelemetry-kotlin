@@ -11,6 +11,6 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v3
-      - uses: ahmadnassri/action-dependabot-auto-merge@v2
-        with:
-          target: minor
+#      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+#        with:
+#          target: minor
