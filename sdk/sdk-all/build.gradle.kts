@@ -1,7 +1,6 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    id("org.jetbrains.kotlinx.kover")
 }
 
 val ideaActive = System.getProperty("idea.active") == "true"
@@ -47,10 +46,6 @@ kotlin {
     sourceSets {
         all { languageSettings.optIn("kotlin.RequiresOptIn") }
 
-        val kotlinVersion: String by project
-        val koTestVersion: String by project
-        val coroutineVersion: String by project
-        val kotlinxCollectionsImmutable: String by project
         val commonMain by getting {
             dependencies {
                 api(project(":context"))
@@ -66,9 +61,9 @@ kotlin {
             dependencies {
                 api(project(":sdk:sdk-testing"))
 
-                implementation("org.jetbrains.kotlin:kotlin-test:1.7.0")
-                implementation("org.jetbrains.kotlin:kotlin-test-common:1.7.0")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.7.0")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.6.20")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.20")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.20")
                 implementation("io.kotest:kotest-assertions-core:5.3.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2")
                 implementation("com.benasher44:uuid:0.4.0")

@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform") apply false
     kotlin("plugin.serialization") apply false
-    id("org.jetbrains.kotlinx.kover") apply false
+    id("org.jetbrains.kotlinx.kover") apply true
 }
 
 if (System.getenv("GITHUB_RUN_NUMBER") != null) {
@@ -19,7 +19,7 @@ allprojects {
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.0")
+        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.17.3")
     }
 }
 
@@ -63,7 +63,7 @@ subprojects {
     }
 }
 
-// FIXME Temporary WORKAROUND for arm64 Apple Silicon; removabl probably with kotlin 1.6.20
+// FIXME Temporary WORKAROUND for arm64 Apple Silicon; removabl probably with kotlin 1.6.200
 rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
     rootProject
         .the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>()
