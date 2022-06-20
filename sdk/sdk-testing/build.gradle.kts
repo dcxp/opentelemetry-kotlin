@@ -57,7 +57,7 @@ kotlin {
                 implementation(project(":sdk:sdk-common"))
 
                 implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
             }
         }
         val commonTest by getting {
@@ -66,7 +66,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-test-common:1.7.0")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.7.0")
                 implementation("io.kotest:kotest-assertions-core:5.3.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.3")
             }
         }
     }

@@ -43,7 +43,7 @@ kotlin {
         val kotlinxCollectionsImmutable = "0.3.5"
         val uuid = "0.4.1"
         val koTestVersion = "5.3.1"
-        val coroutineVersion = "1.6.2"
+        val coroutineVersion = "1.6.3"
 
         val commonMain by getting {
             dependencies {
