@@ -40,7 +40,6 @@ kotlin {
 
     sourceSets {
         val kotlinVersion = "1.6.10"
-        val atomicFu = "0.18.0"
         val kotlinxDatetime = "0.3.2"
         val kotlinxCollectionsImmutable = "0.3.5"
         val uuid = "0.4.0"
@@ -49,7 +48,6 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:atomicfu:$atomicFu")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetime")
                 implementation(
                     "org.jetbrains.kotlinx:kotlinx-collections-immutable:$kotlinxCollectionsImmutable"
