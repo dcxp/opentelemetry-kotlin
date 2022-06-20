@@ -1,10 +1,17 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    id("org.jetbrains.kotlinx.kover")
 }
 
 val ideaActive = System.getProperty("idea.active") == "true"
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.0")
+    }
+}
+
+apply(plugin = "kotlinx-atomicfu")
 
 kotlin {
     jvm { withJava() }
@@ -47,21 +54,17 @@ kotlin {
     sourceSets {
         all { languageSettings.optIn("kotlin.RequiresOptIn") }
 
-        val kotlinVersion: String by project
-        val kotlinxDatetime: String by project
-        val coroutineVersion: String by project
-        val koTestVersion: String by project
         val commonMain by getting {
             dependencies {
-                api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
+                api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:1.7.0")
-                implementation("org.jetbrains.kotlin:kotlin-test-common:1.7.0")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.7.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1" + "-native-mt")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.6.20")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.20")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.20")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
                 implementation("io.kotest:kotest-assertions-core:5.3.1")
             }
         }
