@@ -7,7 +7,7 @@ val ideaActive = System.getProperty("idea.active") == "true"
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.0")
+        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.2")
     }
 }
 
