@@ -52,7 +52,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-test:1.6.20")
                 implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.20")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.20")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
             }
         }
     }
