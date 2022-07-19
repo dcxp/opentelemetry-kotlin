@@ -5,6 +5,14 @@ plugins {
 
 val ideaActive = System.getProperty("idea.active") == "true"
 
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.2")
+    }
+}
+
+apply(plugin = "kotlinx-atomicfu")
+
 kotlin {
     jvm { withJava() }
     js(IR) {
