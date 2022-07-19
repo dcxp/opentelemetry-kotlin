@@ -22,6 +22,7 @@ jobs:
       - name: Setup Gradle Cache
         uses: burrunan/gradle-cache-action@v1
         with:
+          job-id: ${{ GITHUB_REF }}
           gradle-version: wrapper
 
       - name: List Tasks
