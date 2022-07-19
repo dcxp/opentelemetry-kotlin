@@ -67,8 +67,8 @@ kotlin {
                 implementation("io.kotest:kotest-assertions-core:5.3.2")
                 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-                
-                implementation("com.benasher44:uuid:0.4.1")
+
+                implementation("com.benasher44:uuid:0.5.0")
             }
         }
     }
