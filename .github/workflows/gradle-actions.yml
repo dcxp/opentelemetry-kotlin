@@ -20,18 +20,18 @@ jobs:
         uses: gradle/wrapper-validation-action@v1.0.4
 
       - name: Setup Gradle Cache
-        uses: burrunan/gradle-cache-action@v1.12
+        uses: burrunan/gradle-cache-action@v1.11
         with:
           job-id: ${ GITHUB_REF }
           gradle-version: wrapper
 
       - name: List Tasks
-        uses: burrunan/gradle-cache-action@v1.12
+        uses: burrunan/gradle-cache-action@v1.11
         with:
           arguments: tasks
 
       - name: Check Mac Build
-        uses: burrunan/gradle-cache-action@v1.12
+        uses: burrunan/gradle-cache-action@v1.11
         if: matrix.os == 'macOS-latest'
         with:
           arguments: checkMac --scan
@@ -40,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Linux Build
-        uses: burrunan/gradle-cache-action@v1.12
+        uses: burrunan/gradle-cache-action@v1.11
         if: matrix.os == 'ubuntu-latest'
         with:
           arguments: checkLinux --scan
@@ -49,7 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Windows Build
-        uses: burrunan/gradle-cache-action@v1.12
+        uses: burrunan/gradle-cache-action@v1.11
         if: matrix.os == 'windows-latest'
         with:
           arguments: checkWindows --scan
@@ -74,12 +74,12 @@ jobs:
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1.0.4
       - name: Setup Gradle
-        uses: burrunan/gradle-cache-action@v1.12
+        uses: burrunan/gradle-cache-action@v1.11
         with:
           gradle-version: wrapper
 
       - name: Publish Mac Artifacts
-        uses: burrunan/gradle-cache-action@v1.12
+        uses: burrunan/gradle-cache-action@v1.11
         if: matrix.os == 'macOS-latest'
         with:
           arguments: publishMac
@@ -87,7 +87,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Linux Artifacts
-        uses: burrunan/gradle-cache-action@v1.12
+        uses: burrunan/gradle-cache-action@v1.11
         if: matrix.os == 'ubuntu-latest'
         with:
           arguments: publishLinux
@@ -95,7 +95,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Windows Artifacts
-        uses: burrunan/gradle-cache-action@v1.12
+        uses: burrunan/gradle-cache-action@v1.11
         if: matrix.os == 'windows-latest'
         with:
           arguments: publishWindows
