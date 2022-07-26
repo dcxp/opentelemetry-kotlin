@@ -5,14 +5,6 @@ plugins {
 
 val ideaActive = System.getProperty("idea.active") == "true"
 
-buildscript {
-    dependencies {
-        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.2")
-    }
-}
-
-apply(plugin = "kotlinx-atomicfu")
-
 kotlin {
     jvm { withJava() }
     js(IR) {
@@ -67,7 +59,7 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 
-                implementation("io.kotest:kotest-assertions-core:5.3.2")
+                implementation("io.kotest:kotest-assertions-core:5.4.0")
             }
         }
 
