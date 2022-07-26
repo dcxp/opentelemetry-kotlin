@@ -65,7 +65,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-test-common:1.7.10")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.7.10")
 
-                implementation("io.kotest:kotest-assertions-core:5.3.2")
+                implementation("io.kotest:kotest-assertions-core:5.4.0")
                 
                 implementation("com.benasher44:uuid:0.5.0")
 
