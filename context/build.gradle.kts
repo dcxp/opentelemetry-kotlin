@@ -59,7 +59,7 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 
-                implementation("io.kotest:kotest-assertions-core:5.4.0")
+                implementation("io.kotest:kotest-assertions-core:5.4.1")
             }
         }
 
