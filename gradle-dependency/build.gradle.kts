@@ -1,4 +1,4 @@
-val kotlinVersion = "1.6.20"
+val kotlinVersion = "1.7.10"
 
 plugins {
     kotlin("multiplatform")
@@ -39,10 +39,10 @@ kotlin {
 
     sourceSets {
         val kotlinVersion = "1.6.10"
-        val kotlinxDatetime = "0.3.2"
+        val kotlinxDatetime = "0.4.0"
         val kotlinxCollectionsImmutable = "0.3.5"
-        val uuid = "0.4.1"
-        val koTestVersion = "5.3.2"
+        val uuid = "0.5.0"
+        val koTestVersion = "5.4.2"
         val coroutineVersion = "1.6.4"
 
         val commonMain by getting {

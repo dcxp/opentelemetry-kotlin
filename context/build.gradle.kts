@@ -5,14 +5,6 @@ plugins {
 
 val ideaActive = System.getProperty("idea.active") == "true"
 
-buildscript {
-    dependencies {
-        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.0")
-    }
-}
-
-apply(plugin = "kotlinx-atomicfu")
-
 kotlin {
     jvm { withJava() }
     js(IR) {
@@ -56,16 +48,18 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+                api("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:1.6.20")
-                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.20")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.20")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.7.10")
+                implementation("org.jetbrains.kotlin:kotlin-test-common:1.7.10")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.7.10")
+
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                implementation("io.kotest:kotest-assertions-core:5.3.2")
+                
+                implementation("io.kotest:kotest-assertions-core:5.4.2")
             }
         }
 
