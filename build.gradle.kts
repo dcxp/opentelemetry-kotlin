@@ -9,7 +9,6 @@ if (System.getenv("GITHUB_RUN_NUMBER") != null) {
 } else {
     version = "1.0.0"
 }
-
 allprojects {
     repositories {
         mavenCentral()
@@ -20,6 +19,10 @@ allprojects {
 buildscript {
     dependencies {
         classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.3")
+    }
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
     }
 }
 

@@ -25,11 +25,6 @@ jobs:
           job-id: ${ GITHUB_REF }
           gradle-version: wrapper
 
-      - name: List Tasks
-        uses: burrunan/gradle-cache-action@v1.11
-        with:
-          arguments: tasks
-
       - name: Check Mac Build
         uses: burrunan/gradle-cache-action@v1.11
         if: matrix.os == 'macOS-latest'
