@@ -6,7 +6,7 @@ pluginManagement {
     plugins {
         id("org.jetbrains.kotlin.multiplatform") version "$kotlinVersion"
         id("org.jetbrains.kotlin.plugin.serialization") version "$kotlinVersion"
-        id("org.jetbrains.kotlinx.kover") version "0.5.1"
+        id("org.jetbrains.kotlinx.kover") version "0.6.1"
     }
     repositories {
         gradlePluginPortal()
