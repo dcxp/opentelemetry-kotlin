@@ -5,13 +5,13 @@ kotlinxCoroutines =  "1.6.4"
 [libraries]
 benasher44-uuid = "com.benasher44:uuid:0.5.0"
 
-gradleplugin-kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.3"
 gradleplugin-kotlin-main = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradleplugin-kotlinx-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
 kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
 kotlin-test-main = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
+gradleplugin-kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.3"
 jetbrains-kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
 jetbrains-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 jetbrains-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
