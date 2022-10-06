@@ -1,0 +1,20 @@
+name: autoupdate
+on:
+  # This will trigger on all pushes to all branches.
+  push: {}
+  # Alternatively, you can only trigger if commits are pushed to certain branches, e.g.:
+  # push:
+  #   branches:
+  #     - master
+  #     - unstable
+jobs:
+  autoupdate:
+    name: autoupdate
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: docker://chinthakagodawita/autoupdate-action:v1
+        env:
+          GITHUB_TOKEN: '${{ secrets.DCXP_DEPENDABOT_PAT }}'
+          PR_READY_STATE: "ready_for_review"
+# TODO create pat to enable auto update and trigger workflows
+# https://github.community/t/triggering-a-new-workflow-from-another-workflow/16250

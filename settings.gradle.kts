@@ -1,11 +1,7 @@
 rootProject.name = "opentelemetry-kotlin"
 
 pluginManagement {
-    val kotlinVersion = "1.7.20"
-
     plugins {
-        id("org.jetbrains.kotlin.multiplatform") version "$kotlinVersion"
-        id("org.jetbrains.kotlin.plugin.serialization") version "$kotlinVersion"
         id("org.jetbrains.kotlinx.kover") version "0.6.1"
     }
     repositories {
@@ -14,7 +10,7 @@ pluginManagement {
     }
 }
 
-include(":gradle-dependency")
+include(":dependency-sync")
 
 include(":api:all")
 
@@ -28,7 +24,7 @@ include(":sdk:sdk-testing")
 
 include(":sdk:sdk-common")
 
-include(":sdk:sdk-all") // include(":combined")
+include(":sdk:sdk-all")
 
 include(":context")
 

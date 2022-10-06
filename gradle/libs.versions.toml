@@ -1,0 +1,27 @@
+[versions]
+kotlin = "1.7.20"
+kotlinxCoroutines =  "1.6.4"
+
+[libraries]
+benasher44-uuid = "com.benasher44:uuid:0.5.0"
+
+gradleplugin-kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.3"
+gradleplugin-kotlin-main = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradleplugin-kotlinx-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
+kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
+kotlin-test-main = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+
+jetbrains-kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
+jetbrains-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+jetbrains-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+jetbrains-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
+
+kotest-assertions-core = "io.kotest:kotest-assertions-core:5.5.0"
+
+[bundles]
+kotlin-test = ["kotlin-test-main", "kotlin-test-common", "kotlin-test-annotations-common"]
+
+[plugins]
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

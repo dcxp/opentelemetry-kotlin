@@ -18,7 +18,7 @@ allprojects {
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.3")
+        classpath(libs.gradleplugin.kotlinx.atomicfu)
     }
     repositories {
         gradlePluginPortal()
@@ -26,10 +26,8 @@ buildscript {
     }
 }
 
-val doNotPublish = setOf("gradle-dependency")
-
 subprojects {
-    if (this.file("src").exists() && !doNotPublish.contains(this.name)) {
+    if (this.file("src").exists()) {
         apply(plugin = "kotlinx-atomicfu")
     }
 }
@@ -46,7 +44,7 @@ subprojects {
             isReproducibleFileOrder = true
         }
     }
-    if (doNotPublish.contains(this.name)) {
+    if (!this.file("src").exists()) {
         return@subprojects
     }
     apply(plugin = "maven-publish")
