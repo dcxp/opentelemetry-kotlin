@@ -2,6 +2,7 @@ name: Build DCXP Gradle Project
 on: [ push ]
 env:
   CI: true
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   build-gradle-project:
     name: Build & Test Gradle Project
