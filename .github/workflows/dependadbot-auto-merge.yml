@@ -1,16 +1,22 @@
-name: auto-merge
-
+name: Enable Auto Merge
 on:
-  pull_request:
+  pull_request_target:
+    branches:
+      - main
 
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
-    permissions:
-      pull-requests: write
     steps:
-      - uses: actions/checkout@v3
-#      - uses: ahmadnassri/action-dependabot-auto-merge@v2
-#        with:
-#          target: minor
+      - name: Approve dependabot PRs
+        uses: fastify/github-action-merge-dependabot@v3.4.0
+        with:
+          github-token: ${{ secrets.DCXP_DEPENDABOT_PAT }}
+          target: minor
+          approve-only: true
+      - name: Enable automerge on dependabot PRs
+        uses: daneden/enable-automerge-action@v1
+        with:
+          github-token: ${{ secrets.DCXP_DEPENDABOT_PAT }}
+          allowed-author: "dependabot[bot]"
+          merge-method: SQUASH
