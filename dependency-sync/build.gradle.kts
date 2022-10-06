@@ -20,7 +20,7 @@ dependencies {
         "org.jetbrains.kotlinx:kotlinx-collections-immutable:$kotlinxCollectionsImmutable"
     )
     dependencySync("com.benasher44:uuid:0.5.0")
-    dependencySync("org.jetbrains.kotlin:kotlin-serialization:1.7.20")
+    dependencySync("org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion")
     dependencySync("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.3")
     dependencySync("io.kotest:kotest-assertions-core:5.5.0")
 
