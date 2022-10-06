@@ -19,38 +19,33 @@ jobs:
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1.0.4
 
-      - name: Setup Gradle Cache
-        uses: burrunan/gradle-cache-action@v1.11
+      - uses: actions/cache@v3.0.10
         with:
-          job-id: ${ GITHUB_REF }
-          gradle-version: wrapper
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.konan
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Check Mac Build
-        uses: burrunan/gradle-cache-action@v1.11
+        uses: gradle/gradle-build-action@v2.3.2
         if: matrix.os == 'macOS-latest'
         with:
           arguments: checkMac --scan
-          gradle-build-scan-report: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Linux Build
-        uses: burrunan/gradle-cache-action@v1.11
+        uses: gradle/gradle-build-action@v2.3.2
         if: matrix.os == 'ubuntu-latest'
         with:
           arguments: checkLinux --scan
-          gradle-build-scan-report: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Windows Build
-        uses: burrunan/gradle-cache-action@v1.11
+        uses: gradle/gradle-build-action@v2.3.2
         if: matrix.os == 'windows-latest'
         with:
           arguments: checkWindows --scan
-          gradle-build-scan-report: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-to-maven:
     name: Push maven packages
@@ -68,31 +63,30 @@ jobs:
           java-version: 11
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1.0.4
-      - name: Setup Gradle
-        uses: burrunan/gradle-cache-action@v1.11
+      - uses: actions/cache@v3.0.10
         with:
-          gradle-version: wrapper
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.konan
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Publish Mac Artifacts
-        uses: burrunan/gradle-cache-action@v1.11
+        uses: gradle/gradle-build-action@v2.3.2
         if: matrix.os == 'macOS-latest'
         with:
           arguments: publishMac
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Linux Artifacts
-        uses: burrunan/gradle-cache-action@v1.11
+        uses: gradle/gradle-build-action@v2.3.2
         if: matrix.os == 'ubuntu-latest'
         with:
           arguments: publishLinux
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Windows Artifacts
-        uses: burrunan/gradle-cache-action@v1.11
+        uses: gradle/gradle-build-action@v2.3.2
         if: matrix.os == 'windows-latest'
         with:
           arguments: publishWindows
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
