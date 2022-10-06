@@ -9,7 +9,7 @@ dependencySync {
     typeSafeFile.set("${rootDir}/gradle/libs.versions.toml")
 }
 
-val kotlinVersion = "1.6.10"
+val kotlinVersion = "1.7.20"
 val kotlinxCollectionsImmutable = "0.3.5"
 val koTestVersion = "5.5.0"
 val coroutineVersion = "1.6.4"
