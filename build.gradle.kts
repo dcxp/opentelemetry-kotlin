@@ -9,7 +9,6 @@ if (System.getenv("GITHUB_RUN_NUMBER") != null) {
 } else {
     version = "1.0.0"
 }
-
 allprojects {
     repositories {
         mavenCentral()
@@ -19,14 +18,16 @@ allprojects {
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.3")
+        classpath(libs.gradleplugin.kotlinx.atomicfu)
+    }
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
     }
 }
 
-val doNotPublish = setOf("gradle-dependency")
-
 subprojects {
-    if (this.file("src").exists() && !doNotPublish.contains(this.name)) {
+    if (this.file("src").exists()) {
         apply(plugin = "kotlinx-atomicfu")
     }
 }
@@ -43,7 +44,7 @@ subprojects {
             isReproducibleFileOrder = true
         }
     }
-    if (doNotPublish.contains(this.name)) {
+    if (!this.file("src").exists()) {
         return@subprojects
     }
     apply(plugin = "maven-publish")

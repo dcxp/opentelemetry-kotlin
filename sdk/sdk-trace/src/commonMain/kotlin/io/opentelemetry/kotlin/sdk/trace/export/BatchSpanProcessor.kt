@@ -118,7 +118,8 @@ internal constructor(
         private val continueWork = atomic(true)
         private val batchInternal = atomic(persistentListOf<SpanData>())
 
-        val batch: List<SpanData> by batchInternal
+        val batch: List<SpanData>
+            get() = batchInternal.value
 
         init {
             val meter =
