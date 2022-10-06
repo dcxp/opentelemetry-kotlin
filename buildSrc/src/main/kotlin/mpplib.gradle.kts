@@ -8,8 +8,8 @@ val compileNative = findProperty("compileNative") == "true"
 kotlin {
     jvm { withJava() }
     js(IR) {
-        nodejs { testTask { useMocha { timeout = "30s" } } }
-        browser { testTask { useMocha { timeout = "30s" } } }
+        nodejs { testTask { useMocha { timeout = "80s" } } }
+        browser { testTask { useMocha { timeout = "80s" } } }
     }
     if(compileNative){
         if (ideaActive) {
