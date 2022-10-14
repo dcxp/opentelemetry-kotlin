@@ -9,11 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Approve dependabot PRs
-        uses: fastify/github-action-merge-dependabot@v3.4.0
+        uses: ahmadnassri/action-dependabot-auto-merge@v2.3.1
         with:
+          target: minor # includes patch updates!
           github-token: ${{ secrets.DCXP_DEPENDABOT_PAT }}
-          target: minor
-          approve-only: true
       - name: Enable automerge on dependabot PRs
         uses: daneden/enable-automerge-action@v1
         with:
