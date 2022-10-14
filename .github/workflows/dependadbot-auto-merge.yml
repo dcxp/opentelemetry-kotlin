@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Approve dependabot PRs
-        uses: ahmadnassri/action-dependabot-auto-merge@v2.3.1
+        uses: ahmadnassri/action-dependabot-auto-merge@v2.6.0
         with:
           target: minor # includes patch updates!
           github-token: ${{ secrets.DCXP_DEPENDABOT_PAT }}
