@@ -20,7 +20,7 @@ jobs:
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1.0.4
 
-      - uses: actions/cache@v3.0.10
+      - uses: actions/cache@v3.0.11
         with:
           path: |
             ~/.gradle/caches
@@ -64,7 +64,7 @@ jobs:
           java-version: 11
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1.0.4
-      - uses: actions/cache@v3.0.10
+      - uses: actions/cache@v3.0.11
         with:
           path: |
             ~/.gradle/caches
