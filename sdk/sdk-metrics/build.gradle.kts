@@ -8,7 +8,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":context"))
-                api(project(":api:metrics"))
+                //api(project(":api:metrics"))
                 api(project(":sdk:sdk-common"))
 
                 implementation(libs.jetbrains.kotlinx.collections.immutable)
