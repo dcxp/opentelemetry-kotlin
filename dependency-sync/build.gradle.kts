@@ -11,7 +11,7 @@ dependencySync {
 
 val kotlinVersion = "1.7.20"
 val kotlinxCollectionsImmutable = "0.3.5"
-val koTestVersion = "5.5.1"
+val koTestVersion = "5.5.2"
 val coroutineVersion = "1.6.4"
 
 dependencies {
@@ -22,7 +22,7 @@ dependencies {
     dependencySync("com.benasher44:uuid:0.5.0")
     dependencySync("org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion")
     dependencySync("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.18.4")
-    dependencySync("io.kotest:kotest-assertions-core:5.5.1")
+    dependencySync("io.kotest:kotest-assertions-core:5.5.2")
 
     // Kotlin
     dependencySync("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
