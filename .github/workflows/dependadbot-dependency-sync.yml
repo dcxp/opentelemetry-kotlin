@@ -16,7 +16,7 @@ jobs:
           distribution: 'temurin'
           java-version: 11
       - name: Sync Dependencies
-        uses: gradle/gradle-build-action@v2.3.2
+        uses: gradle/gradle-build-action@v2.3.3
         with:
           arguments: dependencySync --no-daemon
       - name: Update Dependency toml
