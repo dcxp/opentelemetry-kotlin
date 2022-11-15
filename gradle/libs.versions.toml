@@ -1,9 +1,9 @@
 [versions]
-kotlin = "1.7.20"
+kotlin = "1.7.21"
 kotlinxCoroutines =  "1.6.4"
 
 [libraries]
-benasher44-uuid = "com.benasher44:uuid:0.5.0"
+benasher44-uuid = "com.benasher44:uuid:0.6.0"
 
 gradleplugin-kotlin-main = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradleplugin-kotlinx-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
@@ -17,7 +17,7 @@ jetbrains-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-co
 jetbrains-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 jetbrains-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 
-kotest-assertions-core = "io.kotest:kotest-assertions-core:5.5.3"
+kotest-assertions-core = "io.kotest:kotest-assertions-core:5.5.4"
 
 [bundles]
 kotlin-test = ["kotlin-test-main", "kotlin-test-common", "kotlin-test-annotations-common"]
