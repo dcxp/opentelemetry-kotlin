@@ -19,3 +19,4 @@ jobs:
         uses: gradle-update/update-gradle-wrapper-action@v1.0.18
         with:
           target-branch: update-gradle
+          repo-token: ${{ secrets.DCXP_DEPENDABOT_PAT }}
