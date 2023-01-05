@@ -7,7 +7,7 @@ jobs:
   run-dependency-sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.2.0
+      - uses: actions/checkout@v3.3.0
         with:
           token: ${{ secrets.DCXP_DEPENDABOT_PAT }}
           ref: ${{ github.head_ref }}
