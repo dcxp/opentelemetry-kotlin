@@ -19,9 +19,9 @@ dependencies {
     dependencySync(
         "org.jetbrains.kotlinx:kotlinx-collections-immutable:$kotlinxCollectionsImmutable"
     )
-    dependencySync("com.benasher44:uuid:0.6.0")
+    dependencySync("com.benasher44:uuid:0.7.0")
     dependencySync("org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion")
-    dependencySync("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.19.0")
+    dependencySync("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.20.0")
     dependencySync("io.kotest:kotest-assertions-core:5.5.4")
 
     // Kotlin
