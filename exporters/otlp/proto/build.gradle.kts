@@ -27,7 +27,7 @@ kotlin {
             org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
                 .getCurrentOperatingSystem()
         if (os.isWindows) {
-            mingwX64()
+            //mingwX64()
         } else if (os.isLinux) {
             linuxX64()
         } else if (os.isMacOsX) {
@@ -49,7 +49,7 @@ kotlin {
 //        tvosX64()
         //    androidNativeArm32()
         //    androidNativeArm64()
-        mingwX64()
+        //mingwX64()
         linuxX64()
     }
 
@@ -60,6 +60,7 @@ kotlin {
             dependencies {
                 api(project(":context"))
                 implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
+                implementation("pro.streem.pbandk:pbandk-runtime:0.14.2")
             }
         }
         val commonTest by getting {

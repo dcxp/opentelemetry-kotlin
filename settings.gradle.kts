@@ -24,6 +24,8 @@ include(":sdk:sdk-testing")
 
 include(":sdk:sdk-common")
 
+include(":exporters:otlp:proto")
+
 include(":exporters:otlp:common")
 
 include(":exporters:otlp:trace")
