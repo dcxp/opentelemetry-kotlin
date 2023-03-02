@@ -2,8 +2,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("org.jetbrains.kotlinx.kover")
-    kotlin("jvm") version "1.6.10"
-    id("com.google.protobuf") version "0.8.18"
+    //id("com.google.protobuf") version "0.8.18"
 }
 
 buildscript {
@@ -78,7 +77,7 @@ kotlin {
 
 val protobufVersion by extra("3.11.1")
 val pbandkVersion by extra("0.13.1-SNAPSHOT")
-
+/*
 protobuf {
     generatedFilesBaseDir = "$projectDir/src"
     protoc {
@@ -101,4 +100,4 @@ protobuf {
             }
         }
     }
-}
+}*/

@@ -1,0 +1,25 @@
+name: Update Dependencies in toml
+on:
+  push:
+    branches:
+      - dependabot/**/*
+jobs:
+  run-dependency-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+        with:
+          token: ${{ secrets.DCXP_DEPENDABOT_PAT }}
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-java@v3.10.0
+        with:
+          distribution: 'temurin'
+          java-version: 11
+      - name: Sync Dependencies
+        uses: gradle/gradle-build-action@v2.4.0
+        with:
+          arguments: dependencySync --no-daemon
+      - name: Update Dependency toml
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: Update Dependencies
