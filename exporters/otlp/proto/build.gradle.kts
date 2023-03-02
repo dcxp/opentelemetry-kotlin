@@ -4,14 +4,6 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
 }
 
-buildscript {
-    dependencies {
-        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.17.1")
-    }
-}
-
-apply(plugin = "kotlinx-atomicfu")
-
 
 val ideaActive = System.getProperty("idea.active") == "true"
 
@@ -54,22 +46,19 @@ kotlin {
     }
 
     sourceSets {
-        all { languageSettings.optIn("kotlin.RequiresOptIn") }
-
         val commonMain by getting {
             dependencies {
                 api(project(":context"))
-                implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
                 implementation("pro.streem.pbandk:pbandk-runtime:0.14.2")
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:1.6.10")
-                implementation("org.jetbrains.kotlin:kotlin-test-common:1.6.10")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.6.10")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" + "-native-mt")
-                implementation("io.kotest:kotest-assertions-core:5.1.0")
+                implementation(libs.bundles.kotlin.test)
+
+                implementation(libs.jetbrains.kotlinx.coroutines.core)
+
+                implementation(libs.kotest.assertions.core)
             }
         }
     }
