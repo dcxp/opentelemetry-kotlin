@@ -10,8 +10,6 @@ pluginManagement {
     }
 }
 
-include(":dependency-sync")
-
 include(":api:all")
 
 include(":api:metrics")
