@@ -26,7 +26,6 @@ kotlin {
         } else {
             macosArm64()
             macosX64()
-            iosArm32()
             iosArm64()
             iosX64()
             linuxX64()
@@ -34,7 +33,6 @@ kotlin {
             // linuxMips32()
             watchosArm32()
             watchosArm64()
-            watchosX86()
             watchosX64()
             tvosArm64()
             tvosX64()
