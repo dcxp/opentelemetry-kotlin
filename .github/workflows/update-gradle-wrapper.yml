@@ -11,12 +11,12 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Update Gradle Wrapper
-        uses: gradle-update/update-gradle-wrapper-action@v1.0.18
+        uses: gradle-update/update-gradle-wrapper-action@v1.0.19
         with:
           target-branch: update-gradle
           repo-token: ${{ secrets.DCXP_DEPENDABOT_PAT }}
