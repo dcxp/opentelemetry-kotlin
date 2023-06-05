@@ -3,7 +3,7 @@ kotlin = "1.8.21"
 kotlinxCoroutines =  "1.7.1"
 
 [libraries]
-benasher44-uuid = "com.benasher44:uuid:0.7.0"
+benasher44-uuid = "com.benasher44:uuid:0.7.1"
 
 gradleplugin-kotlin-main = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradleplugin-kotlinx-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
