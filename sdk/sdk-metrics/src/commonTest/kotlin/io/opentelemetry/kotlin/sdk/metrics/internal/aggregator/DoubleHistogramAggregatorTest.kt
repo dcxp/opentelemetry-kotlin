@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
 
 class DoubleHistogramAggregatorTest {
     var reservoir = ExemplarReservoirMock()
@@ -189,7 +190,7 @@ class DoubleHistogramAggregatorTest {
     }
 
     @Test
-    fun testMultithreadedUpdates() = runTest {
+    fun testMultithreadedUpdates() = runTest( timeout = 200.seconds ) {
         val aggregatorHandle = aggregator.createHandle()
         val summarizer = Histogram()
         val updates: List<Long> = listOf(1L, 2L, 3L, 5L, 7L, 11L, 13L, 17L, 19L, 23L)

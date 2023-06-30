@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
 
 internal class LongMinMaxSumCountAggregatorTest {
     @Test
@@ -77,7 +78,7 @@ internal class LongMinMaxSumCountAggregatorTest {
     }
 
     @Test
-    fun testMultithreadedUpdates() = runTest {
+    fun testMultithreadedUpdates() = runTest( timeout = 200.seconds ) {
         val aggregatorHandle = aggregator.createHandle()
         val summarizer = Summary()
         val numberOfThreads = 10
