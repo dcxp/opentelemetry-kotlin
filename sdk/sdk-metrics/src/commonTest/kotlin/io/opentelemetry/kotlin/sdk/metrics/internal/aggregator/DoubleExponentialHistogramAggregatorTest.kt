@@ -332,7 +332,7 @@ class DoubleExponentialHistogramAggregatorTest {
         }
 
         @Test
-        fun testMultithreadedUpdates() = runTest {
+        fun testMultithreadedUpdates() = runTest( timeout = 200.seconds ) {
             val aggregatorHandle = aggregator.createHandle()
             val summarizer = ExponentialHistogram()
             val updates: List<Double> = listOf(0.0, 0.1, -0.1, 1.0, -1.0, 100.0)

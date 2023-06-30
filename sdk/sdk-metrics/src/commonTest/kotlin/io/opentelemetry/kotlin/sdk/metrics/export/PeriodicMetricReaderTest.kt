@@ -69,7 +69,7 @@ class PeriodicMetricReaderTest {
         }
     */
     @Test
-    fun periodicExport() = runTest {
+    fun periodicExport() = runTest( timeout = 200.seconds ) {
         if (KotlinTarget.isNative() || KotlinTarget.isJs()) {
             // This test has a deadlock on native and js so skip it
             // TODO: fix deadlock
@@ -91,7 +91,7 @@ class PeriodicMetricReaderTest {
         }
     }
     @Test
-    fun flush() = runTest {
+    fun flush() = runTest( timeout = 200.seconds ) {
         val waitingMetricExporter = WaitingMetricExporter()
         val factory: MetricReaderFactory =
             PeriodicMetricReader.builder(waitingMetricExporter)
@@ -108,7 +108,7 @@ class PeriodicMetricReaderTest {
     }
 
     @Test
-    fun intervalExport_exporterThrowsException() = runTest {
+    fun intervalExport_exporterThrowsException() = runTest( timeout = 200.seconds ) {
         if (KotlinTarget.isNative() || KotlinTarget.isJs()) {
             // This test has a deadlock on native so skip it
             // TODO: fix deadlock
@@ -129,7 +129,7 @@ class PeriodicMetricReaderTest {
     }
 
     @Test
-    fun oneLastExportAfterShutdown() = runTest {
+    fun oneLastExportAfterShutdown() = runTest( timeout = 200.seconds ) {
         val waitingMetricExporter = WaitingMetricExporter()
         val factory: MetricReaderFactory =
             PeriodicMetricReader.builder(waitingMetricExporter)

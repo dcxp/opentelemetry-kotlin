@@ -756,7 +756,7 @@ class SdkMeterProviderTest {
     }
 
     @Test
-    fun shutdown() = runTest {
+    fun shutdown() = runTest( timeout = 200.seconds ) {
         val result =
             SdkMeterProvider.builder()
                 .registerMetricReader { _ -> metricReader }

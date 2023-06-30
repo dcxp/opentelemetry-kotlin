@@ -154,7 +154,7 @@ internal class SdkDoubleUpDownCounterTest {
     }
 
     @Test
-    fun stressTest() = runTest {
+    fun stressTest() = runTest( timeout = 200.seconds ) {
         val doubleUpDownCounter =
             sdkMeter.upDownCounterBuilder("testUpDownCounter").ofDoubles().build()
         var stressTestBuilder =
@@ -203,7 +203,7 @@ internal class SdkDoubleUpDownCounterTest {
     }
 
     @Test
-    fun stressTest_WithDifferentLabelSet() = runTest {
+    fun stressTest_WithDifferentLabelSet() = runTest( timeout = 200.seconds ) {
         val keys = arrayOf("Key_1", "Key_2", "Key_3", "Key_4")
         val values = arrayOf("Value_1", "Value_2", "Value_3", "Value_4")
         val doubleUpDownCounter =

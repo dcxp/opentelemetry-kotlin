@@ -48,7 +48,7 @@ internal class SdkTracerTest {
     // TODO Fix stress test
     /*
         @Test
-        fun stressTest() = runTest {
+        fun stressTest() = runTest( timeout = 200.seconds ) {
             val spanProcessor = CountingSpanProcessor()
             val sdkTracerProvider = SdkTracerProvider.builder().addSpanProcessor(spanProcessor).build()
             val tracer =
@@ -66,7 +66,7 @@ internal class SdkTracerTest {
             spanProcessor.numberOfSpansStarted.value shouldBe 800L
         }
         @Test
-        fun stressTest_withBatchSpanProcessor() = runTest {
+        fun stressTest_withBatchSpanProcessor() = runTest( timeout = 200.seconds ) {
             val countingSpanExporter = CountingSpanExporter()
             val spanProcessor: SpanProcessor = BatchSpanProcessor.builder(countingSpanExporter).build()
             val sdkTracerProvider = SdkTracerProvider.builder().addSpanProcessor(spanProcessor).build()
