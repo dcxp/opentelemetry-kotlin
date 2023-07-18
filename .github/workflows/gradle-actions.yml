@@ -31,19 +31,19 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Check Mac Build
-        uses: gradle/gradle-build-action@v2.6.0
+        uses: gradle/gradle-build-action@v2.6.1
         if: matrix.os == 'macOS-latest'
         with:
           arguments: checkMac --scan
 
       - name: Check Linux Build
-        uses: gradle/gradle-build-action@v2.6.0
+        uses: gradle/gradle-build-action@v2.6.1
         if: matrix.os == 'ubuntu-latest'
         with:
           arguments: checkLinux --scan
 
       - name: Check Windows Build
-        uses: gradle/gradle-build-action@v2.6.0
+        uses: gradle/gradle-build-action@v2.6.1
         if: matrix.os == 'windows-latest'
         with:
           arguments: checkWindows --scan
@@ -75,19 +75,19 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Publish Mac Artifacts
-        uses: gradle/gradle-build-action@v2.6.0
+        uses: gradle/gradle-build-action@v2.6.1
         if: matrix.os == 'macOS-latest'
         with:
           arguments: publishMac
 
       - name: Publish Linux Artifacts
-        uses: gradle/gradle-build-action@v2.6.0
+        uses: gradle/gradle-build-action@v2.6.1
         if: matrix.os == 'ubuntu-latest'
         with:
           arguments: publishLinux
 
       - name: Publish Windows Artifacts
-        uses: gradle/gradle-build-action@v2.6.0
+        uses: gradle/gradle-build-action@v2.6.1
         if: matrix.os == 'windows-latest'
         with:
           arguments: publishWindows
