@@ -17,7 +17,7 @@ jetbrains-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-co
 jetbrains-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 jetbrains-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.1"
 
-kotest-assertions-core = "io.kotest:kotest-assertions-core:5.7.1"
+kotest-assertions-core = "io.kotest:kotest-assertions-core:5.7.2"
 
 [bundles]
 kotlin-test = ["kotlin-test-main", "kotlin-test-common", "kotlin-test-annotations-common"]
