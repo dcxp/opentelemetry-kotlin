@@ -15,7 +15,7 @@ gradleplugin-kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.
 jetbrains-kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6"
 jetbrains-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 jetbrains-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
-jetbrains-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.1"
+jetbrains-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0"
 
 kotest-assertions-core = "io.kotest:kotest-assertions-core:5.8.0"
 
