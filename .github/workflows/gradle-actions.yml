@@ -18,7 +18,7 @@ jobs:
           java-version: 11
 
       - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v1.1.0
+        uses: gradle/wrapper-validation-action@v2.1.0
 
       - uses: actions/cache@v3.3.3
         with:
@@ -63,7 +63,7 @@ jobs:
           distribution: 'temurin'
           java-version: 11
       - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v1.1.0
+        uses: gradle/wrapper-validation-action@v2.1.0
       - uses: actions/cache@v3.3.3
         with:
           path: |
