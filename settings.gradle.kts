@@ -2,7 +2,7 @@ rootProject.name = "opentelemetry-kotlin"
 
 pluginManagement {
     plugins {
-        id("org.jetbrains.kotlinx.kover") version "0.7.5"
+        id("org.jetbrains.kotlinx.kover") version "0.7.6"
     }
     repositories {
         gradlePluginPortal()
