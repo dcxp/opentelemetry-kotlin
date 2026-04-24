@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.9.23"
-kotlinxCoroutines =  "1.8.0"
+kotlinxCoroutines =  "1.10.2"
 
 [libraries]
 benasher44-uuid = "com.benasher44:uuid:0.8.4"
